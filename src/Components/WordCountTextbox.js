@@ -19,7 +19,7 @@ function WordCountTextbox(props) {
         onChange={handleInputChange}
         placeholder="Type your text here..."
       /><br/>
-      <span className='text-xs'>
+      <span className='text-xs font-extralight'>
         Words Remaining: {text.trim().split(/\s+/).filter(Boolean).length} / {maxWordCount}
       </span>
     </div>
