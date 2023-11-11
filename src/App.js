@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import PharmacyForm from './Components/PharmacyForm';
 import Login from './Components/Login';
+import DoctorEntry from './Components/DoctorEntry';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <Route path="/company-form" element={<CompanyForm/>}/>
     <Route path="/pharmacy-form" element={<PharmacyForm/>}/>
     <Route path="/login" element={<Login/>}/>
+    <Route path='/add-doctor' element={<DoctorEntry/>}/>
 
    </Routes>
 

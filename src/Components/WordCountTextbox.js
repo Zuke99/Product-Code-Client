@@ -10,16 +10,18 @@ function WordCountTextbox(props) {
 
         if(wordArray.length <= maxWordCount){
             setText(inputValue);
+            props.onTextChange(inputValue)
         }
     }
   return (
     <div>
        <textarea
+       className='w-[100%]'
         value={text}
         onChange={handleInputChange}
         placeholder="Type your text here..."
       /><br/>
-      <span className='text-xs font-extralight'>
+      <span className='text-[10px] font-light'>
         Words Remaining: {text.trim().split(/\s+/).filter(Boolean).length} / {maxWordCount}
       </span>
     </div>
