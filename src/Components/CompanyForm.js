@@ -3,6 +3,7 @@ import WordCountTextbox from './WordCountTextbox'
 import { useDispatch } from 'react-redux';
 import { addCompanyForm } from '../redux/slice/CompanyFormSlice';
 import { useNavigate } from 'react-router';
+import UploadWidget from './UploadWidget';
 
 
 function CompanyForm() {
@@ -20,6 +21,14 @@ function CompanyForm() {
     const [supplDistribDetails, setSupplDistribDetails] = useState("");
     const [manufacturedBy1, setManufacturedBy1] = useState("");
     const [manufacturedBy2, setManufacturedBy2] = useState("");
+
+    const [quotationLpr, setQuotationLpr] = useState("");
+    const [pacCertificate, setPacCertificate] = useState("");
+    const [manufacturerFile, setManufacturerFile] = useState("");
+    const [productPackPhoto, setProductPackPhoto] = useState("");
+    const [additionalDoc1, setAdditionalDoc1] = useState("");
+    const [additionalDoc2, setAdditionalDoc2] = useState("");
+    const [additionalDoc3, setAdditionalDoc3] = useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -118,7 +127,14 @@ function CompanyForm() {
             price_ref : priceRef,
             manufactured_by : manufacturedBy,
             imported_by : importedBy,
-            suppl_distrib_details : supplDistribDetails
+            suppl_distrib_details : supplDistribDetails,
+            file_quotation_lpr : quotationLpr,
+            file_pac_certif : pacCertificate,
+            file_manufacture_impoeter_supplier : manufacturerFile,
+            file_prod_pack_photo : productPackPhoto,
+            file_other_doc1 : additionalDoc1,
+            file_other_doc2 : additionalDoc2,
+            file_other_doc3 : additionalDoc3,
         }
     } else {
         data = {
@@ -134,7 +150,14 @@ function CompanyForm() {
             rate_per_unit : ratePerUnit,
             price_ref : priceRef,
             manufactured_by1 : manufacturedBy1,
-            manufactured_by2 : manufacturedBy2
+            manufactured_by2 : manufacturedBy2,
+            file_quotation_lpr : quotationLpr,
+            file_pac_certif : pacCertificate,
+            file_manufacture_impoeter_supplier : manufacturerFile,
+            file_prod_pack_photo : productPackPhoto,
+            file_other_doc1 : additionalDoc1,
+            file_other_doc2 : additionalDoc2,
+            file_other_doc3 : additionalDoc3,
         }
     }
         const result = dispatch(addCompanyForm(data)).unwrap().then((result) => {
@@ -154,7 +177,7 @@ function CompanyForm() {
             </div>
             <table className='ml-[25%] w-[50%] text-sm '>
                 <tr className=''>
-                    <td className=''>Short Name: </td>
+                    <td className=''>Short Name: (Generic Name) </td>
                     <td className='px-10'><WordCountTextbox wordCount = {10} onTextChange={(text) => setShortName(text)}/></td>
                 </tr>
                 <tr className=' bg-slate-100'>
@@ -162,11 +185,11 @@ function CompanyForm() {
                     <td className='px-10'><WordCountTextbox wordCount = {10} onTextChange={(text) => setUnit(text)}/></td>
                 </tr>
                 <tr className=''>
-                    <td className=''>Description and Specification :</td>
+                    <td className=''>Full Description and Specification :</td>
                     <td className='px-10'><WordCountTextbox wordCount = {50} onTextChange={(text) => setDescAndSpec(text)}/></td>
                 </tr>
                 <tr className=' bg-slate-100'>
-                    <td className=''>Shelf Life :</td>
+                    <td className=''>Shelf Life : (Months)</td>
                     <td className='px-10'><input className='border' type='text' onChange={onShelfChange}></input></td>
                 </tr>
                 <tr className=''>
@@ -234,14 +257,14 @@ function CompanyForm() {
                 </tr>
                 <tr className=''>
                     <td className=''>Upload documents :</td>
-                    <tr className='border-b'><label> Quotation/LPR </label><td className='px-10'><input type='file'></input></td></tr>
-                    <tr className='border-b'><label> PAC Certificate (If Any) </label><td className='px-10'><input type='file'></input></td></tr>
-                    <tr className='border-b'><label> Manufacturer/ Importer/ Supplier Details </label><td className='px-10'><input type='file'></input></td></tr>
-                    <tr className='border-b'><label>  Product Pack Photo </label><td className='px-10'><input type='file'></input></td></tr>
+                    <tr className='border-b'><label> Quotation/LPR </label><td className='px-10'><UploadWidget onTextChange={(link) => setQuotationLpr(link)} />{quotationLpr}</td></tr>
+                    <tr className='border-b'><label> PAC Certificate (If Any) </label><td className='px-10'><UploadWidget onTextChange={(link) => setPacCertificate(link)}/>{pacCertificate}</td></tr>
+                    <tr className='border-b'><label> Manufacturer/ Importer/ Supplier Details </label><td className='px-10'><UploadWidget onTextChange={(link) => setManufacturerFile(link)}/>{manufacturerFile}</td></tr>
+                    <tr className='border-b'><label> Product Pack Photo </label><td className='px-10'><UploadWidget onTextChange={(link) => setProductPackPhoto(link)}/>{productPackPhoto}</td></tr>
 
-                    <tr className='border-b'><label> Additional Document 1 </label><td className='px-10'><input type='file'></input></td></tr>
-                    <tr className='border-b'><label> Additional Document 2 </label><td className='px-10'><input type='file'></input></td></tr>
-                    <tr className='border-b'><label> Additional Document 3 </label><td className='px-10'><input type='file'></input></td></tr>
+                    <tr className='border-b'><label> Additional Document 1 </label><td className='px-10'><UploadWidget onTextChange={(link) => setAdditionalDoc1(link)}/>{additionalDoc1}</td></tr>
+                    <tr className='border-b'><label> Additional Document 2 </label><td className='px-10'><UploadWidget onTextChange={(link) => setAdditionalDoc2(link)}/>{additionalDoc2}</td></tr>
+                    <tr className='border-b'><label> Additional Document 3 </label><td className='px-10'><UploadWidget onTextChange={(link) => setAdditionalDoc3(link)}/>{additionalDoc3}</td></tr>
                     
 
                     

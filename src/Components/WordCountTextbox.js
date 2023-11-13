@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function WordCountTextbox(props) {
-    const [text, setText] = useState('');
+    const [text, setText] = useState(props.defaultValue || '');
     const maxWordCount = props.wordCount;
 
     const handleInputChange = (e) => {
@@ -16,13 +16,13 @@ function WordCountTextbox(props) {
   return (
     <div>
        <textarea
-       className='w-[100%]'
+       className='w-[100%] border rounded-md px-5 py-2'
         value={text}
         onChange={handleInputChange}
         placeholder="Type your text here..."
-      /><br/>
+      />
       <span className='text-[10px] font-light'>
-        Words Remaining: {text.trim().split(/\s+/).filter(Boolean).length} / {maxWordCount}
+         Words Remaining: {text.trim().split(/\s+/).filter(Boolean).length} / {maxWordCount} 
       </span>
     </div>
   )

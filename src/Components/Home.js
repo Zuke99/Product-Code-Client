@@ -36,7 +36,7 @@ function Home() {
   return (
     <div className=''>
       <div className='ml-[35%] mt-[10%] w-[40%] border rounded-md'>
-        <div className='flex justify-center items-center h-16 bg-orange-700 rounded-t-md'>
+        <div className='flex justify-center items-center h-16 bg-ui-black rounded-t-md'>
           <span className='text-white'>Enter Details</span>
         </div>
         <div className='flex justify-center'>
@@ -59,7 +59,7 @@ function Home() {
         <div className='flex justify-center'>
           <button
             onClick={onClickNext}
-            className={`h-10 w-32 my-5 bg-orange-700 text-white rounded-lg ${isButtonDisabled && 'cursor-not-allowed opacity-50'}`}
+            className={`h-10 w-32 my-5 bg-ui-light-blue text-white rounded-lg ${isButtonDisabled && 'cursor-not-allowed opacity-50'}`}
             disabled={isButtonDisabled}
           >
             Next
