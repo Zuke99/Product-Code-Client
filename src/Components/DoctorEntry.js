@@ -1,50 +1,89 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addDoctor } from '../redux/slice/DoctorSlice';
+import CustomPopup from './CustomPopup';
 
-function DoctorEntry() {
+function DoctorEntry(props) {
     const [doctorName, setDoctorName] = useState("");
+    const [designation, setDesignation] = useState("");
+    const [visibility, setVisibility] = useState(true);
 
     const dispatch = useDispatch();
+    
     const onChangeDoctorName = (e) => {
         setDoctorName(e.target.value);
     }
 
+    const onChangeDesignation = (e) => {
+        setDesignation(e.target.value)
+    }
+
+
+
+    const popupCloseHandler = (e, data) => {
+        setVisibility(data);
+        props.onClose();
+      };
+
     const onClickAdd = () => {
         const data = {
-            name : doctorName
+            name : doctorName,
+            designation : designation
         }
-        if(doctorName !== ""){
-            dispatch(addDoctor(data)).unwrap().then((result) => {
-                alert(result.message);
-                window.location.reload();
+        if(doctorName !== "" || designation!==""){
+            console.log("here");
+            dispatch(addDoctor(data))
+            .unwrap()
+            .then((result) => {
+
+                 alert(result.message);
+                 props.onSuccess();
+                // console.log("Cledd props.onsuccess");
+                // props.onSuccess();
+                // popupCloseHandler(false);
+               // navigate("/");
+                
+                
+                
             }).catch((error) => {
-                alert(error);
+                alert("error");
                })
+        } else {
+            alert("please enter all details")
         }
-        console.log(doctorName);
+      
+    
     }
   return (
 
  <div className=''>
-      <div className='ml-[35%] mt-[10%] w-[40%] border rounded-md'>
-      <div className='flex justify-center items-center h-16 bg-orange-700 rounded-t-md'>
+     <CustomPopup onClose={popupCloseHandler}
+        show={visibility}>
+     <div className='ml-[10%] mt-[10%] w-[80%] border rounded-md'>
+      <div className='flex justify-center items-center h-10 bg-ui-black rounded-t-md'>
        <span className='text-white'>Add Doctor</span>
       </div>
-      <div className='flex justify-center'>
+      <div className='flex flex-col justify-center'>
       <input onChange={onChangeDoctorName}
       type='text' 
       placeholder="Enter Doctor's Full Name" 
-      className='w-60 h-10 my-5 mx-5 border rounded-sm px-5'/><br/>
+      className='w-[90%] h-10 my-5 mx-3 border rounded-sm px-5'/>
+      
+      <input onChange={onChangeDesignation}
+      type='text' 
+      placeholder="Enter Doctor's Designation" 
+      className='w-[90%] h-10 my-5 mx-3 border rounded-sm px-5'/>
+      
 
       </div>
 
       <div className='flex justify-center'>
       <button 
       onClick={onClickAdd}
-      className='h-10 w-32 my-5 bg-orange-700 text-white rounded-lg'>Add</button>
+      className='h-10 w-20 my-5 bg-ui-light-blue text-white rounded-lg'>Add</button>
       </div>
       </div>
+     </CustomPopup>
 
     </div>
  

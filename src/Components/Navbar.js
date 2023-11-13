@@ -11,15 +11,12 @@ function Navbar() {
     navigate("/");
   }
 
-  const onClickDoctor = () => {
-    navigate("/add-doctor")
-  }
+
   return (
-    <div className='w-screen h-16 border bg-blue-600'>
+    <div className='flex w-screen h-16 border bg-ui-black justify-center'>
       
          <button onClick={onClickLogin} className='text-white'>Login</button>
          <button className='text-white' onClick={onClickHome}>Home</button>
-         <button onClick={onClickDoctor}>Add/Remove Doctor</button>
         
     </div>
   )

@@ -7,6 +7,8 @@ import Home from './Components/Home';
 import PharmacyForm from './Components/PharmacyForm';
 import Login from './Components/Login';
 import DoctorEntry from './Components/DoctorEntry';
+import PharmacyDashboard from './Components/PharmacyDashboard';
+import Output2 from './Components/Output2';
 
 
 function App() {
@@ -19,6 +21,9 @@ function App() {
     <Route path="/pharmacy-form" element={<PharmacyForm/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path='/add-doctor' element={<DoctorEntry/>}/>
+    <Route path='/output-1' element={<Output2/>}/>
+    <Route path='pharmacy-dashboard' element={<PharmacyDashboard/>}/>
+    
 
    </Routes>
 

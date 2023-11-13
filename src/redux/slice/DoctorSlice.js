@@ -6,7 +6,8 @@ const API_URL = "http://localhost:8080/doctor/"
 export const addDoctor = createAsyncThunk('addDoctor', async(data, {rejectWithValue}) => {
     try{
         const response = await axios.post(API_URL + "add-doctor", data);
-        if(response.status === true){
+        console.log("adddoc response",response)
+        if(response.data.status === true){
             return response.data;
         } else {
             return rejectWithValue(response.data.message);
@@ -19,8 +20,10 @@ export const addDoctor = createAsyncThunk('addDoctor', async(data, {rejectWithVa
 export const getAllDoctors = createAsyncThunk('getAllDoctors', async(_, {rejectWithValue}) => {
     try{
         const response = await axios.get(API_URL + "get-all-doctors");
-        if(response.status === true){
-            return response.data;
+        //console.log("This is response", response.data)
+        if(response.data.status === true){
+            //console.log("This is response", response.data.data)
+            return response.data.data;
         } else {
             return rejectWithValue(response.data.message);
         }
@@ -32,6 +35,7 @@ const DoctorSlice = createSlice({
     name : "doctor",
     initialState : {
         isLoading : true,
+        doctorData : null,
         data : null,
         isError : false,
         message : ""
@@ -55,7 +59,7 @@ const DoctorSlice = createSlice({
         })
         builder.addCase(getAllDoctors.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.data = action.payload;
+            state.doctorData = action.payload;
         })
         builder.addCase(getAllDoctors.rejected, (state) => {
             state.isError = true;
