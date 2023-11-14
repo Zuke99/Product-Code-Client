@@ -1,14 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addDoctor } from '../redux/slice/DoctorSlice';
 import CustomPopup from './CustomPopup';
+import { isUserLoggedIn } from '../redux/slice/UserSlice';
+import { useNavigate } from 'react-router';
 
 function DoctorEntry(props) {
     const [doctorName, setDoctorName] = useState("");
     const [designation, setDesignation] = useState("");
     const [visibility, setVisibility] = useState(true);
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(isUserLoggedIn())
+        .unwrap()
+        .then((result) => {
+          console.log("loggedIn", result);
+        })
+        .catch((error) => {
+          navigate("/login");
+          alert(error.message)
+        })
+    })
     
     const onChangeDoctorName = (e) => {
         setDoctorName(e.target.value);

@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print'
 import { getTracker, updateTracker } from '../redux/slice/TrackerSlice';
+import { isUserLoggedIn } from '../redux/slice/UserSlice';
+import { useNavigate } from 'react-router';
 
 
 function Output2() {
@@ -9,6 +11,7 @@ function Output2() {
     const [companyDetails, setCompanyDetails] = useState();
     const formattedDate = new Date().toLocaleDateString('en-GB');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const trackerDetails1 = useSelector((state) => state.tracker);
     let trackerDetails = null;
@@ -17,6 +20,15 @@ function Output2() {
     }
 
     useEffect(()=>{
+        dispatch(isUserLoggedIn())
+        .unwrap()
+        .then((result) => {
+          console.log("loggedIn", result);
+        })
+        .catch((error) => {
+          navigate("/login");
+          alert(error.message)
+        })
         const details = JSON.parse(localStorage.getItem("PharmacyForm"))
         setCompanyDetails(details);
         dispatch(getTracker());
