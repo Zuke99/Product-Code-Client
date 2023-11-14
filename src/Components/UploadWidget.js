@@ -23,7 +23,7 @@ const UploadWidget = (props) => {
     } catch(error){
         console.log(error);
     }
-     },[props]);
+     },[]);
      return (
         <button
         className="bg-ui-light-blue text-white w-40 h-10 rounded-md"

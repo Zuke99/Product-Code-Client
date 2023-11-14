@@ -41,7 +41,7 @@ function CompanyForm() {
         setPac(e.target.value);
     }
 
-    const onShelfChange = (e) => {
+    const onChangeShelfLife = (e) => {
         setShelfLife(e.target.value);
     }
 
@@ -172,10 +172,10 @@ function CompanyForm() {
   return (
     <div className='flex flex-col border'>
         <div className='flex flex-col w-[100%]'>
-            <div className='flex mt-5 ml-[25%] w-[50%] h-16 bg-orange-700 justify-center items-center'>
+            {/* <div className='flex mt-5 ml-[25%] w-[50%] h-16 bg-orange-700 justify-center items-center'>
                 <h1 className='text-white font-bold'>Company Form</h1>
-            </div>
-            <table className='ml-[25%] w-[50%] text-sm '>
+            </div> */}
+            {/* <table className='ml-[25%] w-[50%] text-sm '>
                 <tr className=''>
                     <td className=''>Short Name: (Generic Name) </td>
                     <td className='px-10'><WordCountTextbox wordCount = {10} onTextChange={(text) => setShortName(text)}/></td>
@@ -190,7 +190,7 @@ function CompanyForm() {
                 </tr>
                 <tr className=' bg-slate-100'>
                     <td className=''>Shelf Life : (Months)</td>
-                    <td className='px-10'><input className='border' type='text' onChange={onShelfChange}></input></td>
+                     <td className='px-10'><input className='border' type='text' onChange={onShelfChange}></input></td> 
                 </tr>
                 <tr className=''>
                     <td className=''>Product Brief Justification :</td>
@@ -269,13 +269,354 @@ function CompanyForm() {
 
                     
                 </tr>
-            </table>
+            </table> */}
             
         </div>
 
-        <button className='w-[50%] ml-[25%] h-10 bg-orange-700 text-white font-bold rounded-md'
+        {/* <button className='w-[50%] ml-[25%] h-10 bg-orange-700 text-white font-bold rounded-md'
         onClick={onClickSubmit}
-        >Submit</button>
+        >Submit</button> */}
+
+
+
+            {/* NEW DESIGN */}
+
+            <div className='flex w-[100%] justify-center mt-5'>
+
+              <div className=' w-[80%]'>
+                <div className='flex bg-ui-black h-10 items-center justify-center'>
+                <center className='text-white text-lg font-bold'>Company Form</center>
+                </div>
+
+
+                <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+                  Short Name (Generic Name)
+                  </div>
+                  <div className='px-5 py-2 border w-[60%]'>
+                  <WordCountTextbox wordCount = {10} onTextChange={(text) => setShortName(text)}/>
+                  </div>
+
+              </div>
+
+
+
+
+              <div className='flex'>
+                  <div className='flex w-[40%] px-5 py-2 border items-center'>
+                  Unit
+                  </div>
+                  <div className='px-5 py-2 border w-[60%]'>
+                  <WordCountTextbox wordCount = {10} onTextChange={(text) => setUnit(text)}/>
+                  </div>
+
+              </div>
+
+
+
+
+              <div className='flex'>
+                  <div className='flex w-[40%] px-5 py-2 border items-center'>
+                  Full Description and Specification
+                  </div>
+                  <div className='px-5 py-2 border w-[60%]'>
+                  <WordCountTextbox wordCount = {50} onTextChange={(text) => setDescAndSpec(text)}/>
+                  </div>
+
+              </div>
+
+
+
+
+              <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Shelf Life (Months)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+                <input className='border h-10 w-96 px-5 rounded-md' type='text' 
+                onChange={onChangeShelfLife} ></input>
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Product Brief Justification
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount = {60} onTextChange={(text) => setProdBriefJust(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Product Complete Justification
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount = {300} onTextChange={(text) => setProdCompleteJustif(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex' >
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Whether the item has to be procured under “PAC”(YES/NO)
+                </div>
+
+                <div className='px-5 py-2 border w-[60%]'>
+                <select className='h-10 w-32 border text-center'
+                onChange={onPacChange}>
+                            <option>Yes</option>
+                            <option>No</option>
+                            </select>
+                </div>
+            </div>
+
+
+
+
+            {pac === "No" &&<>
+                <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Manufactured By: (Company 1)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount={100} onTextChange={(text) => setManufacturedBy1(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Manufactured By: (Company 2)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount={100} onTextChange={(text) => setManufacturedBy2(text)}/>
+            </div>
+
+        </div>
+            </>}
+
+
+
+
+            { pac === "Yes" && <>
+           <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Manufactured By: (Name & Complete Address)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount={100} onTextChange={(text) => setManufacturedBy(text)} />
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Imported by: (Name & Complete Address)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount={100} onTextChange={(text) => setImportedBy(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Supplier/Distributor Details:(Name & Complete Address)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount={100} onTextChange={(text) => setSupplDistribDetails(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+            </>}
+
+
+
+
+            <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Rate per Unit
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount = {50} onTextChange={(text) => setRatePerUnit(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Price reference if any
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <WordCountTextbox wordCount = {50} onTextChange={(text) => setPriceRef(text)}/>
+            </div>
+
+        </div>
+
+
+
+
+        <div>
+            <div className='flex bg-ui-black h-10 items-center justify-center'>
+                <center className='text-white text-lg font-bold'>Upload Documents</center>
+            </div>
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Quotation/LPR
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setQuotationLpr(link)} />{quotationLpr}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            PAC Certificate (If Any)
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setPacCertificate(link)}/>{pacCertificate}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Manufacturer/ Importer/ Supplier Details
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setManufacturerFile(link)}/>{manufacturerFile}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Product Pack Photo
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setProductPackPhoto(link)}/>{productPackPhoto}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Additional Document 1
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setAdditionalDoc1(link)}/>{additionalDoc1}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Additional Document 2
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setAdditionalDoc2(link)}/>{additionalDoc2}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex'>
+            <div className='flex w-[40%] px-5 py-2 border items-center'>
+            Additional Document 3
+            </div>
+            <div className='px-5 py-2 border w-[60%]'>
+            <UploadWidget onTextChange={(link) => setAdditionalDoc3(link)}/>{additionalDoc3}
+            </div>
+
+        </div>
+
+
+
+
+        <div className='flex justify-center mb-96 mt-10'>
+            <button 
+            className='bg-ui-black text-white w-96 h-10 rounded-md'
+            onClick={onClickSubmit}>Submit</button>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </div>
+
+            </div>
+
+
+
+
+
+
+
     </div>
   )
 }
