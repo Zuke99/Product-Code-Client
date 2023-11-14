@@ -16,6 +16,21 @@ export const addPharmacyForm = createAsyncThunk('addPharmacyForm', async(data, {
     }
 })
 
+export const getAllPharmacyForms = createAsyncThunk('getAllPharmacyForms', async(data, {rejectWithValue}) => {
+    try{
+        const response = await axios.get(API_URL + "get-all-pharmacy", data);
+       
+        if(response.data.status === true){
+            console.log("pharmacy response", response.data);
+            return response.data;
+            } else {
+                return rejectWithValue(response.data.message);
+            }
+    }catch (err) {
+        return rejectWithValue(err);
+    }
+})
+
 const PharmacySlice = new createSlice({
     name : "Pharmacy",
     initialState : {
@@ -34,6 +49,19 @@ const PharmacySlice = new createSlice({
             state.data = action.payload;
         })
         builder.addCase(addPharmacyForm.rejected, (state) => {
+            state.isError = true;
+            state.isLoading = false;
+        })
+
+
+        builder.addCase(getAllPharmacyForms.pending, (state) => {
+            state.isLoading = false;
+        })
+        builder.addCase(getAllPharmacyForms.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        })
+        builder.addCase(getAllPharmacyForms.rejected, (state) => {
             state.isError = true;
             state.isLoading = false;
         })
