@@ -7,9 +7,13 @@ import { getAllDoctors } from '../redux/slice/DoctorSlice';
 import DoctorEntry from './DoctorEntry';
 import UploadWidget from './UploadWidget';
 import { updateCompanyFormStatus } from '../redux/slice/CompanyFormSlice';
+import CopyToClipboardButton from './CopyToClipboardButton';
+import { getTracker, updateTracker } from '../redux/slice/TrackerSlice';
 
 
 function PharmacyForm() {
+
+   
 
 
 
@@ -37,7 +41,7 @@ function PharmacyForm() {
     const [shelfLife, setShelfLife] = useState(JSON.parse(localStorage.getItem("CompanyForm")).shelf_life || '');
     const [prodBriefJustif, setProdBriefJust] = useState(JSON.parse(localStorage.getItem("CompanyForm")).prod_brief_justif || '');
     const [prodCompleteJustif, setProdCompleteJustif] = useState(JSON.parse(localStorage.getItem("CompanyForm")).prod_complete_justif || '');
-    const [pac, setPac] = useState("Yes");
+    const [pac, setPac] = useState(JSON.parse(localStorage.getItem("CompanyForm")).pac_yes_no || 'Yes');
     const [ratePerUnit, setRatePerUnit] = useState(JSON.parse(localStorage.getItem("CompanyForm")).rate_per_unit || '');
     const [priceRef, setPriceRef] = useState(JSON.parse(localStorage.getItem("CompanyForm")).price_ref || '');
     const [manufacturedBy, setManufacturedBy] = useState(JSON.parse(localStorage.getItem("CompanyForm")).manufactured_by || '');
@@ -57,11 +61,33 @@ function PharmacyForm() {
     const [additionalDoc1, setAdditionalDoc1] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc1 || '');
     const [additionalDoc2, setAdditionalDoc2] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc2 || '');
     const [additionalDoc3, setAdditionalDoc3] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc3 || '');
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [formData,setFormData] = useState([]);
+    useEffect(()=>{
+        dispatch(getAllDoctors());
+          const data = JSON.parse(localStorage.getItem("CompanyForm"));
+          checkFY();
+          setFormData(data)
+          // if(allDoctors){
+          //     setSuggestedBy(allDoctors[0].name);
+          //     setCounterSignedBy(allDoctors[0].name);
+          // }
+          dispatch(getTracker());
+          
+         
+      },[dispatch, setFormData, setSuggestedBy, setCounterSignedBy])
 
   
 
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const trackerDetails1 = useSelector((state) => state.tracker);
+    let trackerDetails = null;
+    if(trackerDetails1.getData){
+        trackerDetails = trackerDetails1.getData.data[0];
+    }
 
     const handleOpenPopup = () => {
       setIsPopupOpen(true);
@@ -70,23 +96,12 @@ function PharmacyForm() {
     const handleClosePopup = () => {
       setIsPopupOpen(!isPopupOpen);
     };
-    const [formData,setFormData] = useState([]);
+
 
     const allDoctors = useSelector((state) => state.doctor.doctorData)
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    useEffect(()=>{
-      dispatch(getAllDoctors());
-        const data = JSON.parse(localStorage.getItem("CompanyForm"));
-        setFormData(data)
-        // if(allDoctors){
-        //     setSuggestedBy(allDoctors[0].name);
-        //     setCounterSignedBy(allDoctors[0].name);
-        // }
-       
-    },[allDoctors,dispatch, setFormData, setSuggestedBy, setCounterSignedBy])
+   
 
 
     const refreshDoctorList = () => {
@@ -113,6 +128,28 @@ function PharmacyForm() {
     }
     const onChangeCounterSignedBy = (e) => {
         setCounterSignedBy(e.target.value);
+    }
+
+    const checkFY = () => {
+        const date = new Date();
+        let currentMonth = date.getMonth()+1;
+        let currentYear = date.getFullYear();
+        const fyear2 = (currentYear % 100) + 1;
+
+       
+        
+        if(currentMonth > 2){
+            let updateTracker1 = {
+                _id : "6553250e6c6ac4939b14cdc0",
+                fy1 : currentYear,
+                fy2 : fyear2
+            }
+            dispatch(updateTracker(updateTracker1));
+
+        }
+
+        console.log(currentYear);
+        console.log(currentMonth);
     }
     const onClickSubmit = () => {
         for(let i = 0;i< allDoctors.length ;i++){
@@ -172,6 +209,13 @@ function PharmacyForm() {
          }).catch((error) => {
             alert(error);
            })
+
+           const slno = trackerDetails.sl_no + 1;
+        const trackerUpdate = {
+            _id : "6553250e6c6ac4939b14cdc0",
+            sl_no : slno
+        }
+        dispatch(updateTracker(trackerUpdate));
 
 
 
@@ -572,7 +616,9 @@ function PharmacyForm() {
 
                 <div className='px-5 py-2 border w-[60%]'>
                 <select className='h-10 w-32 border text-center'
-                onChange={onPacChange}>
+                onChange={onPacChange}
+                value={pac}
+                >
                             <option>Yes</option>
                             <option>No</option>
                             </select>
@@ -778,7 +824,8 @@ function PharmacyForm() {
             Quotation/LPR
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setQuotationLpr(link)}/> {quotationLpr === "" ? "Not Uploaded" : quotationLpr}
+            <UploadWidget onTextChange={(link) => setQuotationLpr(link)}/> {quotationLpr === "" ? "Not Uploaded" : quotationLpr}<br/>
+            {quotationLpr !== "" && <CopyToClipboardButton valueToCopy={quotationLpr}/>}
             </div>
 
         </div>
@@ -791,7 +838,8 @@ function PharmacyForm() {
             PAC Certificate (If Any)
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setPacCertificate(link)}/>{pacCertificate === "" ? "Not Uploaded" : pacCertificate}
+            <UploadWidget onTextChange={(link) => setPacCertificate(link)}/>{pacCertificate === "" ? "Not Uploaded" : pacCertificate}<br/>
+            {pacCertificate !== "" && <CopyToClipboardButton valueToCopy={pacCertificate}/>}
             </div>
 
         </div>
@@ -804,7 +852,8 @@ function PharmacyForm() {
             Manufacturer/ Importer/ Supplier Details
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setManufacturerFile(link)}/>{manufacturerFile === "" ? "Not Uploaded" : manufacturerFile}
+            <UploadWidget onTextChange={(link) => setManufacturerFile(link)}/>{manufacturerFile === "" ? "Not Uploaded" : manufacturerFile}<br/>
+            {manufacturerFile !== "" && <CopyToClipboardButton valueToCopy={manufacturerFile}/>}
             </div>
 
         </div>
@@ -817,7 +866,8 @@ function PharmacyForm() {
             Product Pack Photo
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setProductPackPhoto(link)}/>{productPackPhoto === "" ? "Not Uploaded" : productPackPhoto}
+            <UploadWidget onTextChange={(link) => setProductPackPhoto(link)}/>{productPackPhoto === "" ? "Not Uploaded" : productPackPhoto}<br/>
+            {productPackPhoto !== "" && <CopyToClipboardButton valueToCopy={productPackPhoto}/>}
             </div>
 
         </div>
@@ -830,7 +880,8 @@ function PharmacyForm() {
             Additional Document 1
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setAdditionalDoc1(link)}/>{additionalDoc1 === "" ? " Not Uploaded" : additionalDoc1}
+            <UploadWidget onTextChange={(link) => setAdditionalDoc1(link)}/>{additionalDoc1 === "" ? " Not Uploaded" : additionalDoc1}<br/>
+            {additionalDoc1 !== "" && <CopyToClipboardButton valueToCopy={additionalDoc1}/>}
             </div>
 
         </div>
@@ -843,7 +894,8 @@ function PharmacyForm() {
             Additional Document 2
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setAdditionalDoc2(link)}/>{additionalDoc2 === "" ? " Not Uploaded" : additionalDoc2}
+            <UploadWidget onTextChange={(link) => setAdditionalDoc2(link)}/>{additionalDoc2 === "" ? " Not Uploaded" : additionalDoc2}<br/>
+            {additionalDoc2 !== "" && <CopyToClipboardButton valueToCopy={additionalDoc2}/>}
             </div>
 
         </div>
@@ -856,7 +908,8 @@ function PharmacyForm() {
             Additional Document 3
             </div>
             <div className='px-5 py-2 border w-[60%]'>
-            <UploadWidget onTextChange={(link) => setAdditionalDoc3(link)}/>{additionalDoc3 === "" ? " Not Uploaded" : additionalDoc3}
+            <UploadWidget onTextChange={(link) => setAdditionalDoc3(link)}/>{additionalDoc3 === "" ? " Not Uploaded" : additionalDoc3}<br/>
+            {additionalDoc3 !== "" && <CopyToClipboardButton valueToCopy={additionalDoc3}/>}
             </div>
 
         </div>

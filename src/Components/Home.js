@@ -7,6 +7,8 @@ function Home() {
   const [companyName, setCompanyName] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(true);
 
+  
+
   const onChangeFullName = (e) => {
     const value = e.target.value;
     setFullName(value);

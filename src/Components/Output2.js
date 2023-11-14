@@ -1,17 +1,32 @@
 import React, {useEffect, useRef, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useReactToPrint } from 'react-to-print'
+import { getTracker, updateTracker } from '../redux/slice/TrackerSlice';
+
 
 function Output2() {
 
     const [companyDetails, setCompanyDetails] = useState();
     const formattedDate = new Date().toLocaleDateString('en-GB');
+    const dispatch = useDispatch();
+
+    const trackerDetails1 = useSelector((state) => state.tracker);
+    let trackerDetails = null;
+    if(trackerDetails1.getData){
+        trackerDetails = trackerDetails1.getData.data[0];
+    }
 
     useEffect(()=>{
         const details = JSON.parse(localStorage.getItem("PharmacyForm"))
         setCompanyDetails(details);
-    },[setCompanyDetails])
+        dispatch(getTracker());
+        
+
+        
+    },[setCompanyDetails, dispatch])
 
     const printRef = useRef();
+
 
     const handlePrint = useReactToPrint({
         content: () => printRef.current,
@@ -19,7 +34,7 @@ function Output2() {
 
   return (
     <>
-   { companyDetails && <div className=''>
+   { companyDetails && trackerDetails && <div className=''>
        
       <div ref={printRef} >
        <div className=' w-[100%] text-md text-center mt-10'>
@@ -36,7 +51,7 @@ function Output2() {
 
 
        <div className='ml-20 text-sm'>
-       No: HQ/MD/69/Stores/PH Code/2023-24/{1}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       No: HQ/MD/69/Stores/PH Code/{trackerDetails.fy1}-{trackerDetails.fy2}/{trackerDetails.sl_no}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        
@@ -109,7 +124,7 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
 
 
 <div className='ml-20 text-sm'>
-No: HQ/MD/69/Stores/PH Code/{2023-24}/{10}
+No: HQ/MD/69/Stores/PH Code/{trackerDetails.fy1}-{trackerDetails.fy2}/{trackerDetails.sl_no}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -173,7 +188,7 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
 
 </div>
 <div className='ml-20 text-sm'>
-    <p>Request No. {1}  
+    <p>Request No. {trackerDetails.sl_no}  
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -309,7 +324,7 @@ CENTRAL HOSPITAL, LALLAGUDA, SECUNDERABAD-17<br/></strong>
 </div>
 
 <div className='ml-20 text-sm'>
-No: HQ/MD/69.Stores/PH Code/FY/{1}     
+No: HQ/MD/69.Stores/PH Code/{trackerDetails.fy1}-{trackerDetails.fy2}/{trackerDetails.sl_no}    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -348,7 +363,13 @@ No: HQ/MD/69.Stores/PH Code/FY/{1}
 
     </div>}
 
-    <button onClick={handlePrint}>Print</button>
+    <div className='flex justify-center mb-96 mt-10'>
+            <button 
+            className='bg-ui-light-blue text-white w-96 h-10 rounded-md'
+            onClick={handlePrint}>Print</button>
+        </div>
+
+    {/* <button onClick={handlePrint}>Print</button> */}
     </>
   )
 }

@@ -22,7 +22,7 @@ function WordCountTextbox(props) {
         placeholder="Type your text here..."
       />
       <span className='text-[10px] font-light'>
-         Words Remaining: {text.trim().split(/\s+/).filter(Boolean).length} / {maxWordCount} 
+         Word limit: {text.trim().split(/\s+/).filter(Boolean).length} / {maxWordCount} 
       </span>
     </div>
   )
