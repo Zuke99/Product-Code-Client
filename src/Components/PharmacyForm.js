@@ -9,6 +9,7 @@ import UploadWidget from './UploadWidget';
 import { updateCompanyFormStatus } from '../redux/slice/CompanyFormSlice';
 import CopyToClipboardButton from './CopyToClipboardButton';
 import { getTracker, updateTracker } from '../redux/slice/TrackerSlice';
+import { isUserLoggedIn } from '../redux/slice/UserSlice';
 
 
 function PharmacyForm() {
@@ -30,10 +31,10 @@ function PharmacyForm() {
 
 
 
-    const [productCode, setProductCode] = useState();
-    const [detailsExistingProduct, setDetailsExistingProduct] = useState();
-    const [detailsOfChanges, setDetailsOfChanges] = useState();
-    const [specification, setSpecification] = useState();
+    const [productCode, setProductCode] = useState("");
+    const [detailsExistingProduct, setDetailsExistingProduct] = useState("");
+    const [detailsOfChanges, setDetailsOfChanges] = useState("");
+    const [specification, setSpecification] = useState("");
     const [category, setCategory] = useState("Medicines");
     const [shortName, setShortName] = useState(JSON.parse(localStorage.getItem("CompanyForm")).short_name || '');
     const [unit, setUnit] = useState(JSON.parse(localStorage.getItem("CompanyForm")).unit || '');
@@ -51,7 +52,7 @@ function PharmacyForm() {
     const [manufacturedBy2, setManufacturedBy2] = useState(JSON.parse(localStorage.getItem("CompanyForm")).manufactured_by2 || '');
     const [suggestedBy, setSuggestedBy] = useState("");
     const [counterSignedBy, setCounterSignedBy] = useState("");
-    const [avgMontlyConsumption, setAvgMonthlyConsumption] = useState();
+    const [avgMontlyConsumption, setAvgMonthlyConsumption] = useState("");
     const [req, setReq] = useState("New");
 
     const [quotationLpr, setQuotationLpr] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_quotation_lpr || '');
@@ -65,6 +66,15 @@ function PharmacyForm() {
     const navigate = useNavigate();
     const [formData,setFormData] = useState([]);
     useEffect(()=>{
+        dispatch(isUserLoggedIn())
+        .unwrap()
+        .then((result) => {
+          console.log("loggedIn", result);
+        })
+        .catch((error) => {
+          navigate("/login");
+          alert(error.message)
+        })
         dispatch(getAllDoctors());
           const data = JSON.parse(localStorage.getItem("CompanyForm"));
           checkFY();
@@ -97,6 +107,109 @@ function PharmacyForm() {
       setIsPopupOpen(!isPopupOpen);
     };
 
+    const validate = () => {
+        if(req === ""){
+            alert("Enter Reequest For");
+          return false;
+        }
+        if(req === "Existing" && productCode === ""){
+            alert("Enter Product Code");
+          return false;
+        }
+        if(req === "Existing" && detailsExistingProduct === ""){
+            alert("Enter Details of existing Product");
+          return false;
+        }
+        if(req === "Existing" && detailsOfChanges === ""){
+            alert("Enter Details of changes proposed in the above product");
+          return false;
+        }
+        if(req === "Existing" && specification === ""){
+            alert("Enter Specification");
+          return false;
+        }
+        
+        
+        
+        
+        if(category === ""){
+            alert("Enter Category");
+          return false;
+        }
+        
+        if (shortName === "") {
+            console.log("short empty")
+          alert("Enter Short Name");
+          return false;
+        }
+        if (unit === "") {
+          alert("Enter Unit");
+          return false;
+        }
+        if (descAndSpec === "") {
+          alert("Enter Description and Specification");
+          return false;
+        }
+        if (shelfLife === "") {
+          alert("Enter Shelf Life");
+          return false;
+        }
+        if (prodBriefJustif === "") {
+          alert("Enter Product Brief Justification");
+          return false;
+        }
+        if (prodCompleteJustif === "") {
+          alert("Enter Product Complete Justification");
+          return false;
+        }
+        if (pac === "Yes") {
+          if (manufacturedBy === "") {
+            alert("Enter Manufactured By");
+            return false;
+          }
+          if (importedBy === "") {
+            alert("Enter Imported By");
+            return false;
+          }
+          if (supplDistribDetails === "") {
+            alert("Enter Supplier/Distributor Details");
+            return false;
+          }
+        } else {
+          if (manufacturedBy1 === "") {
+            alert("Enter Manufactured By (Company 1)");
+            return false;
+          }
+          if (manufacturedBy2 === "") {
+            alert("Enter Manufactured By (Company 2)");
+            return false;
+          }
+        }
+        if (ratePerUnit === "") {
+          alert("Enter Rate per Unit");
+          return false;
+        }
+        if (priceRef === "") {
+            alert("Enter Price Reference");
+            return false;
+          }
+        if(suggestedBy === "" || suggestedBy ==="Select a Doctor"){
+            console.log("suggested by", suggestedBy);
+            alert("Enter Suggested By");
+          return false;
+        }
+        if(counterSignedBy === "" || counterSignedBy === "Select a Doctor"){
+            alert("Enter Counter Signed By");
+          return false;
+        }
+        if (avgMontlyConsumption === "") {
+            alert("Enter Average Monthly Consumption");
+            return false;
+          }
+        
+      
+        return true;
+      };
 
     const allDoctors = useSelector((state) => state.doctor.doctorData)
 
@@ -152,6 +265,8 @@ function PharmacyForm() {
         console.log(currentMonth);
     }
     const onClickSubmit = () => {
+
+        if(validate()){
         for(let i = 0;i< allDoctors.length ;i++){
             if(allDoctors[i].name === suggestedBy){
                 localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
@@ -216,6 +331,7 @@ function PharmacyForm() {
             sl_no : slno
         }
         dispatch(updateTracker(trackerUpdate));
+    }
 
 
 
