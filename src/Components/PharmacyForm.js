@@ -253,8 +253,10 @@ function PharmacyForm() {
         let currentYear = date.getFullYear();
         const fyear2 = (currentYear % 100) + 1;
 
+        if(trackerDetails){
         setFy1(trackerDetails.fy1);
         setFy2(trackerDetails.fy2);
+        }
 
 
        
