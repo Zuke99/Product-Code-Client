@@ -31,11 +31,11 @@ function PharmacyForm() {
 
 
 
-    const [productCode, setProductCode] = useState("");
-    const [detailsExistingProduct, setDetailsExistingProduct] = useState("");
-    const [detailsOfChanges, setDetailsOfChanges] = useState("");
-    const [specification, setSpecification] = useState("");
-    const [category, setCategory] = useState("Medicines");
+    const [productCode, setProductCode] = useState(JSON.parse(localStorage.getItem("CompanyForm")).product_code || "");
+    const [detailsExistingProduct, setDetailsExistingProduct] = useState(JSON.parse(localStorage.getItem("CompanyForm")).details_existing_product || "");
+    const [detailsOfChanges, setDetailsOfChanges] = useState(JSON.parse(localStorage.getItem("CompanyForm")).details_of_changes || "");
+    const [specification, setSpecification] = useState(JSON.parse(localStorage.getItem("CompanyForm")).specification || "");
+    const [category, setCategory] = useState(JSON.parse(localStorage.getItem("CompanyForm")).category || "Medicines");
     const [shortName, setShortName] = useState(JSON.parse(localStorage.getItem("CompanyForm")).short_name || '');
     const [unit, setUnit] = useState(JSON.parse(localStorage.getItem("CompanyForm")).unit || '');
     const [descAndSpec, setDescAndSpec] = useState(JSON.parse(localStorage.getItem("CompanyForm")).desc_and_spec || '');
@@ -50,10 +50,10 @@ function PharmacyForm() {
     const [supplDistribDetails, setSupplDistribDetails] = useState(JSON.parse(localStorage.getItem("CompanyForm")).suppl_distrib_details || '');
     const [manufacturedBy1, setManufacturedBy1] = useState(JSON.parse(localStorage.getItem("CompanyForm")).manufactured_by1 || '');
     const [manufacturedBy2, setManufacturedBy2] = useState(JSON.parse(localStorage.getItem("CompanyForm")).manufactured_by2 || '');
-    const [suggestedBy, setSuggestedBy] = useState("");
-    const [counterSignedBy, setCounterSignedBy] = useState("");
-    const [avgMontlyConsumption, setAvgMonthlyConsumption] = useState("");
-    const [req, setReq] = useState("New");
+    const [suggestedBy, setSuggestedBy] = useState(JSON.parse(localStorage.getItem("CompanyForm")).suggested_by ||"");
+    const [counterSignedBy, setCounterSignedBy] = useState(JSON.parse(localStorage.getItem("CompanyForm")).counter_signed_by ||"");
+    const [avgMontlyConsumption, setAvgMonthlyConsumption] = useState(JSON.parse(localStorage.getItem("CompanyForm")).avg_monthly_consumption || "");
+    const [req, setReq] = useState(JSON.parse(localStorage.getItem("CompanyForm")).req_for || "New");
 
     const [quotationLpr, setQuotationLpr] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_quotation_lpr || '');
     const [pacCertificate, setPacCertificate] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_pac_certif || '');
@@ -62,6 +62,9 @@ function PharmacyForm() {
     const [additionalDoc1, setAdditionalDoc1] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc1 || '');
     const [additionalDoc2, setAdditionalDoc2] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc2 || '');
     const [additionalDoc3, setAdditionalDoc3] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc3 || '');
+
+    const [fy1, setFy1] = useState();
+    const [fy2, setFy2] = useState();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formData,setFormData] = useState([]);
@@ -77,13 +80,14 @@ function PharmacyForm() {
         })
         dispatch(getAllDoctors());
           const data = JSON.parse(localStorage.getItem("CompanyForm"));
+          dispatch(getTracker());
           checkFY();
           setFormData(data)
           // if(allDoctors){
           //     setSuggestedBy(allDoctors[0].name);
           //     setCounterSignedBy(allDoctors[0].name);
           // }
-          dispatch(getTracker());
+          
           
          
       },[dispatch, setFormData, setSuggestedBy, setCounterSignedBy])
@@ -249,6 +253,10 @@ function PharmacyForm() {
         let currentYear = date.getFullYear();
         const fyear2 = (currentYear % 100) + 1;
 
+        setFy1(trackerDetails.fy1);
+        setFy2(trackerDetails.fy2);
+
+
        
         
         if(currentMonth > 2){
@@ -257,12 +265,18 @@ function PharmacyForm() {
                 fy1 : currentYear,
                 fy2 : fyear2
             }
+            setFy1(currentYear);
+            setFy2(fyear2);
             dispatch(updateTracker(updateTracker1));
 
         }
+        
 
         console.log(currentYear);
         console.log(currentMonth);
+    }
+    const onClickCancel = () => {
+        navigate("/pharmacy-dashboard");
     }
     const onClickSubmit = () => {
 
@@ -272,7 +286,17 @@ function PharmacyForm() {
                 localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
             }
         }
+
+
+        const slno = trackerDetails.sl_no + 1;
+        const trackerUpdate = {
+            _id : "6553250e6c6ac4939b14cdc0",
+            sl_no : slno
+        }
         const data = {
+            sl_no : slno,
+            fy1 : fy1,
+            fy2 : fy2,
             req_for : req,
             product_code : productCode,
             details_existing_product : detailsExistingProduct,
@@ -325,11 +349,6 @@ function PharmacyForm() {
             alert(error);
            })
 
-           const slno = trackerDetails.sl_no + 1;
-        const trackerUpdate = {
-            _id : "6553250e6c6ac4939b14cdc0",
-            sl_no : slno
-        }
         dispatch(updateTracker(trackerUpdate));
     }
 
@@ -1033,11 +1052,34 @@ function PharmacyForm() {
 
 
 
-        <div className='flex justify-center mb-96 mt-10'>
+       { localStorage.getItem("navigate-from-dashboard") !== "true" && <div className='flex justify-center mb-96 mt-10'>
             <button 
             className='bg-ui-black text-white w-96 h-10 rounded-md'
             onClick={onClickSubmit}>Submit</button>
+        </div>}
+
+        { localStorage.getItem("navigate-from-dashboard") === "true" && <div className='flex justify-center mb-96 mt-10'>
+            <button 
+            className='bg-ui-black text-white w-96 h-10 rounded-md mx-5'
+            onClick={onClickSubmit}>Update</button>
+
+<button 
+            className='bg-ui-black text-white w-96 h-10 rounded-md'
+            onClick={onClickCancel}>Cancel</button>
+
+
         </div>
+
+        
+
+
+
+
+        
+        
+        
+        
+        }
 
 
 
