@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import popupStyles from "../styling/custom-popup.module.css";
 import PropTypes from "prop-types";
+import { isUserLoggedIn } from "../redux/slice/UserSlice";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 const CustomPopup = (props) => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const closeHandler = (e) => {
     setShow(false);
@@ -10,6 +15,15 @@ const CustomPopup = (props) => {
   };
 
   useEffect(() => {
+    dispatch(isUserLoggedIn())
+        .unwrap()
+        .then((result) => {
+          console.log("loggedIn", result);
+        })
+        .catch((error) => {
+          navigate("/login");
+          alert(error.message)
+        })
     setShow(props.show);
   }, [props.show]);
 
