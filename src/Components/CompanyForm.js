@@ -460,7 +460,7 @@ function CompanyForm() {
 
             <div className='flex'>
             <div className='flex w-[40%] px-5 py-2 border items-center'>
-            Rate per Unit
+            Rate per Unit (In Rupees)
             </div>
             <div className='px-5 py-2 border w-[60%]'>
             <WordCountTextbox wordCount = {50} onTextChange={(text) => setRatePerUnit(text)}/>
@@ -473,7 +473,7 @@ function CompanyForm() {
 
         <div className='flex'>
             <div className='flex w-[40%] px-5 py-2 border items-center'>
-            Price reference if any
+            Price reference if any (Quotation / Purchase Order)
             </div>
             <div className='px-5 py-2 border w-[60%]'>
             <WordCountTextbox wordCount = {50} onTextChange={(text) => setPriceRef(text)}/>

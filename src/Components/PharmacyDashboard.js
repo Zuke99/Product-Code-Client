@@ -180,11 +180,14 @@ function PharmacyDashboard() {
     </div>
 
     <div className='flex'>
-        <div className='flex w-[40%] border justify-center'>
-          <strong>Full Name</strong>
+    <div className='flex w-[40%] border justify-center'>
+          <strong>Sl No.</strong>
         </div>
         <div className='flex w-[40%] border justify-center'>
-          <strong>Company Name</strong>
+          <strong>Short Name</strong>
+        </div>
+        <div className='flex w-[40%] border justify-center'>
+          <strong>Description</strong>
         </div>
         <div className='flex w-[20%] border justify-center'>
           <strong>Proceed</strong>
@@ -202,6 +205,9 @@ pharmacyForms.data
 .map((form) => (
 <div key={form._id} className='flex'>
 <div className='flex w-[40%] py-2 border justify-center'>
+  {form.sl_no}
+</div>
+<div className='flex w-[40%] py-2 border justify-center'>
   {form.short_name}
 </div>
 <div className='flex w-[40%] py-2 border justify-center'>
@@ -209,14 +215,14 @@ pharmacyForms.data
 </div>
 <div className='flex w-[20%] py-2 border justify-center'>
   <button 
-    className='bg-ui-light-blue text-white w-32 h-8 rounded-md'
+    className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
     onClick={() => onClickOpenPharmacyForm(form._id)}>
     Update Form
   </button>
 </div>
 <div className='flex w-[20%] py-2 border justify-center'>
   <button 
-    className='bg-ui-light-blue text-white w-32 h-8 rounded-md'
+    className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
     onClick={() => onClickPrint(form._id)}>
     Print
   </button>
