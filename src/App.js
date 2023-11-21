@@ -9,6 +9,7 @@ import Login from './Components/Login';
 import DoctorEntry from './Components/DoctorEntry';
 import PharmacyDashboard from './Components/PharmacyDashboard';
 import Output2 from './Components/Output2';
+import DoctorList from './Components/DoctorList';
 
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
     <Route path='/add-doctor' element={<DoctorEntry/>}/>
     <Route path='/output-1' element={<Output2/>}/>
     <Route path='pharmacy-dashboard' element={<PharmacyDashboard/>}/>
+    <Route path='doctor-list' element={<DoctorList/>}/>
+    
     
 
    </Routes>
