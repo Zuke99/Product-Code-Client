@@ -35,6 +35,9 @@ function Navbar() {
   const onClickDashboard = () => {
     navigate("/pharmacy-dashboard");
   }
+  const onClickDoctorsList = () => {
+    navigate("/doctor-list");
+  }
 
 
   return (
@@ -44,6 +47,7 @@ function Navbar() {
          <button className='text-white mx-5' onClick={onClickHome}>Home</button>
          {loggedIn &&<button onClick={onClickLogout} className='text-white mx-5'>LogOut</button>}
          {loggedIn && <button onClick={onClickDashboard} className='text-white mx-5'>Dashboard</button>}
+         {loggedIn && <button onClick={onClickDoctorsList} className='text-white mx-5'>Doctor's List</button>}
         
     </div>
   )
