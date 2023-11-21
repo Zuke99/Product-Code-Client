@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import WordCountTextbox from './WordCountTextbox';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPharmacyForm } from '../redux/slice/PharmacySlice';
+import { addPharmacyForm, updatePharmacyForms } from '../redux/slice/PharmacySlice';
 import { useNavigate } from 'react-router';
 import { getAllDoctors } from '../redux/slice/DoctorSlice';
 import DoctorEntry from './DoctorEntry';
@@ -253,8 +253,10 @@ function PharmacyForm() {
         let currentYear = date.getFullYear();
         const fyear2 = (currentYear % 100) + 1;
 
+        if(trackerDetails){
         setFy1(trackerDetails.fy1);
         setFy2(trackerDetails.fy2);
+        }
 
 
        
@@ -278,6 +280,70 @@ function PharmacyForm() {
     const onClickCancel = () => {
         navigate("/pharmacy-dashboard");
     }
+
+    const onClickUpdate = () => {
+
+        if(validate()){
+            for(let i = 0;i< allDoctors.length ;i++){
+                if(allDoctors[i].name === suggestedBy){
+                    localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
+                }
+                if(allDoctors[i].name === counterSignedBy){
+                    localStorage.setItem("DoctorCounter", JSON.stringify(allDoctors[i].designation));
+                }
+            }
+            
+
+            const data = {
+                _id : JSON.parse(localStorage.getItem("CompanyForm"))._id,
+                sl_no : JSON.parse(localStorage.getItem("CompanyForm")).sl_no,
+                fy1 : fy1,
+                fy2 : fy2,
+                req_for : req,
+                product_code : productCode,
+                details_existing_product : detailsExistingProduct,
+                details_of_changes : detailsOfChanges,
+                specification : specification,
+                category : category,
+                short_name : shortName,
+                unit : unit,
+                desc_and_spec : descAndSpec,
+                shelf_life : shelfLife,
+                prod_brief_justif : prodBriefJustif,
+                prod_complete_justif : prodCompleteJustif,
+                pac_yes_no : pac,
+                manufactured_by : manufacturedBy,
+                imported_by : importedBy,
+                suppl_distrib_details : supplDistribDetails,
+                manufactured_by1 : manufacturedBy1,
+                manufactured_by2 : manufacturedBy2,
+                rate_per_unit : ratePerUnit,
+                price_ref : priceRef,
+                suggested_by : suggestedBy,
+                counter_signed_by : counterSignedBy,
+                avg_monthly_consumption : avgMontlyConsumption,
+                file_quotation_lpr : quotationLpr,
+                file_pac_certif : pacCertificate,
+                file_manufacture_impoeter_supplier : manufacturerFile,
+                file_prod_pack_photo : productPackPhoto,
+                file_other_doc1 : additionalDoc1,
+                file_other_doc2 : additionalDoc2,
+                file_other_doc3 : additionalDoc3,
+    
+            }
+
+            dispatch(updatePharmacyForms(data)).unwrap().then((result) => {
+                alert(result.message);
+                localStorage.setItem("PharmacyForm", JSON.stringify(data));
+                navigate("/output-1");
+            }).catch((error) => {
+                alert(error);
+               })
+
+
+        }
+
+    }
     const onClickSubmit = () => {
 
         if(validate()){
@@ -285,7 +351,11 @@ function PharmacyForm() {
             if(allDoctors[i].name === suggestedBy){
                 localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
             }
+            if(allDoctors[i].name === counterSignedBy){
+                localStorage.setItem("DoctorCounter", JSON.stringify(allDoctors[i].designation));
+            }
         }
+
 
 
         const slno = trackerDetails.sl_no + 1;
@@ -1061,7 +1131,7 @@ function PharmacyForm() {
         { localStorage.getItem("navigate-from-dashboard") === "true" && <div className='flex justify-center mb-96 mt-10'>
             <button 
             className='bg-ui-black text-white w-96 h-10 rounded-md mx-5'
-            onClick={onClickSubmit}>Update</button>
+            onClick={onClickUpdate}>Update</button>
 
 <button 
             className='bg-ui-black text-white w-96 h-10 rounded-md'
