@@ -31,6 +31,20 @@ export const getAllDoctors = createAsyncThunk('getAllDoctors', async(_, {rejectW
         return rejectWithValue(err);
     }
 })
+
+export const deleteDoctor = createAsyncThunk('deleteDoctor', async (doctorId, { rejectWithValue }) => {
+    try {
+        const response = await axios.delete(`${API_URL}delete-doctor/${doctorId}`);
+        if (response.data.status === true) {
+            return response.data.data;
+        } else {
+            return rejectWithValue(response.data.message);
+        }
+    } catch (err) {
+        return rejectWithValue(err);
+    }
+});
+
 const DoctorSlice = createSlice({
     name : "doctor",
     initialState : {
@@ -62,6 +76,19 @@ const DoctorSlice = createSlice({
             state.doctorData = action.payload;
         })
         builder.addCase(getAllDoctors.rejected, (state) => {
+            state.isError = true;
+            state.isLoading = false;
+        })
+
+         //DeleteDoctor
+         builder.addCase(deleteDoctor.pending, (state) => {
+            state.isLoading = false;
+        })
+        builder.addCase(deleteDoctor.fulfilled, (state, action) => {
+            state.isLoading = false;
+            
+        })
+        builder.addCase(deleteDoctor.rejected, (state) => {
             state.isError = true;
             state.isLoading = false;
         })
