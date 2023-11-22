@@ -63,6 +63,9 @@ function PharmacyForm() {
     const [additionalDoc2, setAdditionalDoc2] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc2 || '');
     const [additionalDoc3, setAdditionalDoc3] = useState(JSON.parse(localStorage.getItem("CompanyForm")).file_other_doc3 || '');
 
+    const [suggestedByDesignation, setSuggestedByDesignation] = useState();
+    const [counterSignedByDesignation, setCounterSignedByDesignation] = useState();
+
     const [fy1, setFy1] = useState();
     const [fy2, setFy2] = useState();
     const dispatch = useDispatch();
@@ -282,14 +285,18 @@ function PharmacyForm() {
     }
 
     const onClickUpdate = () => {
+        const todayDate = new Date();
 
         if(validate()){
             for(let i = 0;i< allDoctors.length ;i++){
                 if(allDoctors[i].name === suggestedBy){
                     localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
+                    setSuggestedByDesignation(allDoctors[i].designation);
+
                 }
                 if(allDoctors[i].name === counterSignedBy){
                     localStorage.setItem("DoctorCounter", JSON.stringify(allDoctors[i].designation));
+                    setCounterSignedByDesignation(allDoctors[i].designation);
                 }
             }
             
@@ -329,6 +336,10 @@ function PharmacyForm() {
                 file_other_doc1 : additionalDoc1,
                 file_other_doc2 : additionalDoc2,
                 file_other_doc3 : additionalDoc3,
+                suggested_by_designation : suggestedByDesignation,
+                counter_signed_by_designation : counterSignedByDesignation,
+                date_of_submission : JSON.parse(localStorage.getItem("CompanyForm")).date_of_submission,
+                date_of_generation : todayDate
     
             }
 
@@ -345,14 +356,24 @@ function PharmacyForm() {
 
     }
     const onClickSubmit = () => {
+        const todayDate = new Date();
+
+        let suggDesig = "";
+        let countDesig = "";
 
         if(validate()){
         for(let i = 0;i< allDoctors.length ;i++){
             if(allDoctors[i].name === suggestedBy){
+                console.log("sugg yes");
                 localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
+                setSuggestedByDesignation(allDoctors[i].designation);
+                suggDesig = allDoctors[i].designation;
             }
             if(allDoctors[i].name === counterSignedBy){
+                console.log("yes");
                 localStorage.setItem("DoctorCounter", JSON.stringify(allDoctors[i].designation));
+                setCounterSignedByDesignation(allDoctors[i].designation);
+                countDesig = allDoctors[i].designation;
             }
         }
 
@@ -397,8 +418,13 @@ function PharmacyForm() {
             file_other_doc1 : additionalDoc1,
             file_other_doc2 : additionalDoc2,
             file_other_doc3 : additionalDoc3,
+            suggested_by_designation : suggDesig,
+            counter_signed_by_designation : countDesig,
+            date_of_submission : JSON.parse(localStorage.getItem("CompanyForm")).date_of_submission,
+            date_of_generation : todayDate
 
         }
+        console.log("SENT DATA", data);
 
         const storageId = JSON.parse(localStorage.getItem("CompanyForm"))._id;
 
@@ -632,9 +658,9 @@ function PharmacyForm() {
 
     {/*    *********************************************** NEW DESIGN ************************************************************ */}
 
-    {formData && <div className='flex justify-center w-[100%] mt-10 '>
+    {formData && <div className='flex justify-center w-[100%] mt-10 bg-slate-100'>
 
-       <div className=' w-[80%]'>
+       <div className=' w-[80%] shadow-xl mb-16 bg-white'>
         <div>
             <div className='flex bg-ui-black h-10 items-center justify-center'>
                 <center className='text-white text-lg font-bold'>Pharmacy Form</center>

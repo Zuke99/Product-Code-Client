@@ -9,6 +9,8 @@ function PharmacyDashboard() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [visibleForms, setVisibleForms] = useState(8); 
+    const [isSearchActive, setIsSearchActive] = useState(false);
+    const [searchData, setSearchData] = useState([]);
 
     useEffect(() => {
       
@@ -32,10 +34,25 @@ function PharmacyDashboard() {
 
     const companyForms = useSelector((state) => state.companyForm.data);
     const pharmacyForms = useSelector((state) => state.pharmacy.data);
+
+    
     
 
     console.log("Company Form Req List",companyForms)
     console.log("phamacy form list", pharmacyForms);
+
+    // const handleSearch = (term) => {
+    //   if (term.trim() !== '') {
+    //     setIsSearchActive(true);
+    //     setSearchTerm(term);
+    //   } else {
+    //     setIsSearchActive(false);
+    //     setSearchTerm('');
+    //   }
+    // };
+
+
+
 
     const handleScroll = (e) => {
       const bottom =
@@ -72,9 +89,38 @@ function PharmacyDashboard() {
           for(let i = 0; i< pharmacyForms.data.length ; i++){
             if(pharmacyForms.data[i]._id === id){
               localStorage.setItem("PharmacyForm", JSON.stringify(pharmacyForms.data[i]))
+              localStorage.setItem("Doctor", JSON.stringify(pharmacyForms.data[i]).suggested_by);
+              //console.log("clicked print", pharmacyForms.data[i].counter_signed_by);
+              localStorage.setItem("DoctorCounter", JSON.stringify(pharmacyForms.data[i]).counter_signed_by); 
               navigate("/output-1");
             }
           }
+        }
+
+        const onChangeSearch = (e) => {
+          const searchTerm = e.target.value.toLowerCase().trim();
+          if (searchTerm !== '') {
+            setIsSearchActive(true);
+            // setSearchTerm(searchTerm);
+        
+            const searchdata = pharmacyForms.data.filter((form) =>
+              form.short_name.toLowerCase().includes(searchTerm) || form.desc_and_spec.toLowerCase().includes(searchTerm)
+            );
+        
+            // Do something with searchData, such as updating state or using it directly
+            
+            setSearchData(searchdata  );
+            console.log("SEARCH DATA",searchData);
+            // Set searchData state or use it in your component as needed
+            // setSearchData(searchData);
+          } else {
+            setIsSearchActive(false);
+            setSearchData("");
+            // setSearchTerm('');
+            // Handle case when search term is empty
+          }
+          
+          
         }
    
   return (
@@ -117,6 +163,7 @@ function PharmacyDashboard() {
         <div className='w-[60%]'>
             <div className='flex bg-ui-black h-10 items-center justify-center'>
                 <center className='text-white text-lg font-bold'>Company Form Requests</center>
+              
             </div>
 
             <div className='flex'>
@@ -174,14 +221,27 @@ function PharmacyDashboard() {
    
 <div className='flex w-[100%] justify-center mt-5'>
 
-<div className='w-[60%]'>
+<div className='w-[90%]'>
     <div className='flex bg-ui-black h-10 items-center justify-center'>
         <center className='text-white text-lg font-bold'>Previous Form Submissions</center>
+        <input
+            type='text'
+            placeholder='Search by Short Name or Description'
+            
+            onChange={onChangeSearch}
+            className='border border-gray-300 rounded-md p-2 ml-10 h-7 mt-4 mb-2'
+          />
     </div>
 
     <div className='flex'>
     <div className='flex w-[40%] border justify-center'>
           <strong>Sl No.</strong>
+        </div>
+        <div className='flex w-[40%] border justify-center'>
+          <strong>Submission Date:</strong>
+        </div>
+        <div className='flex w-[40%] border justify-center'>
+          <strong>Generation Date</strong>
         </div>
         <div className='flex w-[40%] border justify-center'>
           <strong>Short Name</strong>
@@ -195,43 +255,89 @@ function PharmacyDashboard() {
         <div className='flex w-[20%] border justify-center'>
           <strong>Output</strong>
         </div>
+        
     </div>
 
 
 
 
-    {pharmacyForms && Array.isArray(pharmacyForms.data)? (
-pharmacyForms.data
-.map((form) => (
-<div key={form._id} className='flex'>
-<div className='flex w-[40%] py-2 border justify-center'>
-  {form.sl_no}
-</div>
-<div className='flex w-[40%] py-2 border justify-center'>
-  {form.short_name}
-</div>
-<div className='flex w-[40%] py-2 border justify-center'>
-  {form.desc_and_spec}
-</div>
-<div className='flex w-[20%] py-2 border justify-center'>
-  <button 
-    className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
-    onClick={() => onClickOpenPharmacyForm(form._id)}>
-    Update Form
-  </button>
-</div>
-<div className='flex w-[20%] py-2 border justify-center'>
-  <button 
-    className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
-    onClick={() => onClickPrint(form._id)}>
-    Print
-  </button>
-</div>
-</div>
-))
+    {!isSearchActive && pharmacyForms && Array.isArray(pharmacyForms.data) ? ( 
+  pharmacyForms.data 
+    .slice() // create a shallow copy of the array to avoid mutating the original
+    .sort((a, b) => b.sl_no - a.sl_no) // sort the array in descending order of sl_no
+    .map((form) => (
+      <div key={form._id} className='flex'>
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {form.sl_no}
+        </div>
+        <div className='flex w-[40%] py-2 border justify-center'>
+        {new Date(form.date_of_submission).toLocaleDateString('en-GB')}
+        </div>
+       
+        <div className='flex w-[40%] py-2 border justify-center'>
+        {new Date(form.date_of_generation).toLocaleDateString('en-GB')}
+        </div>
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {form.short_name}
+        </div>
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {form.desc_and_spec}
+        </div>
+        <div className='flex w-[20%] py-2 border justify-center'>
+          <button 
+            className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
+            onClick={() => onClickOpenPharmacyForm(form._id)}>
+            Update Form
+          </button>
+        </div>
+        <div className='flex w-[20%] py-2 border justify-center'>
+          <button 
+            className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
+            onClick={() => onClickPrint(form._id)}>
+            Print
+          </button>
+        </div>
+      </div>
+    ))
 ) : (
-<p>no data available</p>
+  searchData && Array.isArray(searchData) && searchData
+    .map((form) => (
+      <div key={form._id} className='flex'>
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {form.sl_no}
+        </div>
+        
+        <div className='flex w-[40%] py-2 border justify-center'>
+        {new Date(form.date_of_submission).toLocaleDateString('en-GB')}
+        </div>
+       
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {new Date(form.date_of_generation).toLocaleDateString('en-GB')}
+        </div>
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {form.short_name}
+        </div>
+        <div className='flex w-[40%] py-2 border justify-center'>
+          {form.desc_and_spec}
+        </div>
+        <div className='flex w-[20%] py-2 border justify-center'>
+          <button 
+            className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
+            onClick={() => onClickOpenPharmacyForm(form._id)}>
+            Update Form
+          </button>
+        </div>
+        <div className='flex w-[20%] py-2 border justify-center'>
+          <button 
+            className='bg-ui-light-blue text-white w-28 h-8 rounded-md'
+            onClick={() => onClickPrint(form._id)}>
+            Print
+          </button>
+        </div>
+      </div>
+    ))
 )}
+
 </div>
 
 

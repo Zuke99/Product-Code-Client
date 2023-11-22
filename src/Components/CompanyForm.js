@@ -110,6 +110,7 @@ function CompanyForm() {
     const onClickSubmit = () => {
     
         const companyDetails = JSON.parse(localStorage.getItem("details"));
+        const todayDate = new Date();
       if(validate() === true){
         let data = {};
         if(pac === "Yes"){
@@ -135,6 +136,7 @@ function CompanyForm() {
             file_other_doc1 : additionalDoc1,
             file_other_doc2 : additionalDoc2,
             file_other_doc3 : additionalDoc3,
+            date_of_submission : todayDate
         }
     } else {
         data = {
@@ -158,6 +160,7 @@ function CompanyForm() {
             file_other_doc1 : additionalDoc1,
             file_other_doc2 : additionalDoc2,
             file_other_doc3 : additionalDoc3,
+            date_of_submission : todayDate
         }
     }
         const result = dispatch(addCompanyForm(data)).unwrap().then((result) => {
@@ -170,8 +173,8 @@ function CompanyForm() {
      
     }
   return (
-    <div className='flex flex-col border'>
-        <div className='flex flex-col w-[100%]'>
+    <div className='flex flex-col border bg-slate-200'>
+        <div className='flex flex-col w-[100%]  bg-slate-200'>
             {/* <div className='flex mt-5 ml-[25%] w-[50%] h-16 bg-orange-700 justify-center items-center'>
                 <h1 className='text-white font-bold'>Company Form</h1>
             </div> */}
@@ -281,9 +284,9 @@ function CompanyForm() {
 
             {/* NEW DESIGN */}
 
-            <div className='flex w-[100%] justify-center mt-5'>
+            <div className='flex w-[100%] justify-center mt-5 bg-slate-200'>
 
-              <div className=' w-[80%]'>
+              <div className=' w-[80%] shadow-xl mb-16 bg-white'>
                 <div className='flex bg-ui-black h-10 items-center justify-center'>
                 <center className='text-white text-lg font-bold'>Company Form</center>
                 </div>
@@ -584,7 +587,7 @@ function CompanyForm() {
 
 
 
-        <div className='flex justify-center mb-96 mt-10'>
+        <div className='flex justify-center mb-16 mt-10'>
             <button 
             className='bg-ui-black text-white w-96 h-10 rounded-md'
             onClick={onClickSubmit}>Submit</button>
