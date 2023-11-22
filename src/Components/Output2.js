@@ -70,6 +70,12 @@ function Output2() {
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;
        
        Date:{formattedDate}<br/><br/>
 
@@ -158,6 +164,12 @@ No: HQ/MD/69/Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDe
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;
      
        
        Date:{formattedDate}<br/><br/>
@@ -181,9 +193,9 @@ issued by {companyDetails.suggested_by}, Note Approval, and other documents if a
     <br/>
     <div className='text-[12px] text-center ml-[70%] w-[20%]'>
     <p> Indenting Officer <br/>
-      {companyDetails.suggested_by.replace(/"/g, '')} 
+      {companyDetails.suggested_by } 
     <br/>
-  ( {localStorage.getItem("Doctor").replace(/"/g, '')} )
+  ( {companyDetails.suggested_by_designation } )
 
     </p>
     </div>
@@ -209,7 +221,7 @@ issued by {companyDetails.suggested_by}, Note Approval, and other documents if a
 {/* THIRD PAGE */}
 
 <div>
-<div className=' w-[100%]  text-sm text-center mt-[600px]'>
+<div className=' w-[100%]  text-[10px] text-center mt-[600px]'>
 
 
 Office of the Medical Director<br/>
@@ -218,12 +230,18 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
 <hr className='w-[80%] mx-auto border-[1px] border-black '></hr>
 
 </div>
-<div className='ml-20 text-sm'>
+<div className='ml-20 text-[10px]'>
     <p>Request No. {companyDetails.sl_no}/{companyDetails.fy1}-{companyDetails.fy2}
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -322,14 +340,14 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
             </tr>
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%]'>Suggested by</td>
-                <td className='flex justify-center pt-20'>{companyDetails.suggested_by} <br/>( {localStorage.getItem("Doctor").replace(/"/g, '')} )</td>
+                <td className='flex justify-center pt-20'>{companyDetails.suggested_by} <br/>( {companyDetails.suggested_by_designation } )</td>
             </tr>
 
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%] '>Countersigned by 
 Unit in-charge/Stores Incharge 
 </td>
-                <td className='flex justify-center pt-20'>{companyDetails.counter_signed_by}<br/> ( {localStorage.getItem("DoctorCounter").replace(/"/g, '')} )</td>
+                <td className='flex justify-center pt-20'>{companyDetails.counter_signed_by}<br/> ( {companyDetails.counter_signed_by_designation } )</td>
             </tr>
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%]'>MD/CH/LGD</td>
@@ -359,7 +377,7 @@ Unit in-charge/Stores Incharge
 
     <div>
    
-<div className=' w-[100%] text-md text-center mt-96'>
+<div className=' w-[100%] text-[12px] text-center mt-96'>
 
 
 <strong>SOUTH CENTRAL RAILWAY <br/>
@@ -370,7 +388,7 @@ CENTRAL HOSPITAL, LALLAGUDA, SECUNDERABAD-17<br/></strong>
 
 </div>
 
-<div className='ml-20 text-sm'>
+<div className='ml-20 text-[10px]'>
 No: HQ/MD/69.Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDetails.sl_no}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -379,6 +397,16 @@ No: HQ/MD/69.Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDe
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;
+     
+      
+       
        
        Date:{formattedDate}<br/><br/>
 
@@ -391,11 +419,11 @@ No: HQ/MD/69.Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDe
     {companyDetails.prod_complete_justif}
 </div>
 
-<div className='text-md text-center ml-[70%] w-[20%]'>
+<div className='text-[12px] text-center ml-[70%] w-[20%]'>
     <p>  <br/>
     {companyDetails.suggested_by}  
     <br/>
-  ( {localStorage.getItem("Doctor").replace(/"/g, '')} )
+  ( {companyDetails.suggested_by_designation } )
 
     </p>
     </div>
