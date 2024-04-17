@@ -62,6 +62,8 @@ function PharmacyDashboard() {
         setVisibleForms((prevVisibleForms) => prevVisibleForms + 8);
       }
     };
+
+    
    const onClickOpenForm = (id) => {
  
         for(let i = 0;i < companyForms.data.length; i++){
@@ -225,13 +227,17 @@ function PharmacyDashboard() {
     <div className='flex bg-ui-black h-10 items-center justify-center'>
         <center className='text-white text-lg font-bold'>Previous Form Submissions</center>
         <input
-            type='text'
+        
+            type='type'
             placeholder='Search by Short Name or Description'
             
             onChange={onChangeSearch}
-            className='border border-gray-300 rounded-md p-2 ml-10 h-7 mt-4 mb-2'
+            className='border border-gray-300 rounded-md p-2 ml-10 h-7 mt-4 mb-4 w-96 '
           />
+       
     </div>
+
+    
 
     <div className='flex'>
     <div className='flex w-[40%] border justify-center'>

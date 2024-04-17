@@ -10,6 +10,7 @@ import { updateCompanyFormStatus } from '../redux/slice/CompanyFormSlice';
 import CopyToClipboardButton from './CopyToClipboardButton';
 import { getTracker, updateTracker } from '../redux/slice/TrackerSlice';
 import { isUserLoggedIn } from '../redux/slice/UserSlice';
+import { all } from 'axios';
 
 
 function PharmacyForm() {
@@ -66,6 +67,13 @@ function PharmacyForm() {
     const [suggestedByDesignation, setSuggestedByDesignation] = useState();
     const [counterSignedByDesignation, setCounterSignedByDesignation] = useState();
 
+    const [suggestions, setSuggestions] = useState([]);
+    const [suggestions2, setSuggestions2] = useState([]);
+
+    const allDoctors = useSelector((state) => state.doctor.doctorData)
+
+    const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+
     const [fy1, setFy1] = useState();
     const [fy2, setFy2] = useState();
     const dispatch = useDispatch();
@@ -75,16 +83,24 @@ function PharmacyForm() {
         dispatch(isUserLoggedIn())
         .unwrap()
         .then((result) => {
+          
           console.log("loggedIn", result);
         })
         .catch((error) => {
           navigate("/login");
           alert(error.message)
         })
-        dispatch(getAllDoctors());
+        dispatch(getAllDoctors())
           const data = JSON.parse(localStorage.getItem("CompanyForm"));
-          dispatch(getTracker());
-          checkFY();
+          dispatch(getTracker()).unwrap().then((result) => {
+            console.log("GET TRACKER",result);
+            checkFY(result);
+            if (allDoctors) {
+                loadDoctorDesignations();
+               
+              }
+        });
+          
           setFormData(data)
           // if(allDoctors){
           //     setSuggestedBy(allDoctors[0].name);
@@ -95,6 +111,8 @@ function PharmacyForm() {
          
       },[dispatch, setFormData, setSuggestedBy, setCounterSignedBy])
 
+      
+
   
 
 
@@ -103,6 +121,7 @@ function PharmacyForm() {
     const trackerDetails1 = useSelector((state) => state.tracker);
     let trackerDetails = null;
     if(trackerDetails1.getData){
+        console.log("Tracker Sett", trackerDetails1)
         trackerDetails = trackerDetails1.getData.data[0];
     }
 
@@ -218,7 +237,7 @@ function PharmacyForm() {
         return true;
       };
 
-    const allDoctors = useSelector((state) => state.doctor.doctorData)
+   
 
 
    
@@ -244,18 +263,68 @@ function PharmacyForm() {
         setShelfLife(e.target.value);
     }
     const onChangeSuggestedBy = (e) => {
-        setSuggestedBy(e.target.value);
+        const inputValue = e.target.value;
+
+
+        if(inputValue !== ""){
+        setSuggestedBy(inputValue);
+    
+        // Filter doctors based on user input
+        const filteredDoctors = allDoctors.filter(
+          (doctor) =>
+            doctor.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+            doctor.designation.toLowerCase().includes(inputValue.toLowerCase())
+        );
+    
+        setSuggestions2(filteredDoctors);
+        } else {
+            setSuggestions2([]);
+            setSuggestedBy("");
+        }
+
+
+
     }
     const onChangeCounterSignedBy = (e) => {
-        setCounterSignedBy(e.target.value);
-    }
+       
+        const inputValue = e.target.value;
 
-    const checkFY = () => {
+        if(inputValue !== ""){
+        setCounterSignedBy(inputValue);
+    
+        // Filter doctors based on user input
+        const filteredDoctors = allDoctors.filter(
+          (doctor) =>
+            doctor.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+            doctor.designation.toLowerCase().includes(inputValue.toLowerCase())
+        );
+    
+        setSuggestions(filteredDoctors);
+        } else {
+            setSuggestions([]);
+            setCounterSignedBy("");
+        }
+        
+
+    }
+    const selectDoctor = (doctor) => {
+        setCounterSignedBy(doctor.name);
+        setCounterSignedByDesignation(doctor.designation);
+        setSuggestions([]); // Hide suggestions after selecting
+      };
+
+      const selectDoctor2 = (doctor) => {
+        setSuggestedBy(doctor.name);
+        setSuggestedByDesignation(doctor.designation);  
+        setSuggestions2([]); // Hide suggestions after selecting
+      };
+
+    const checkFY = (trackerDet) => {
         const date = new Date();
         let currentMonth = date.getMonth()+1;
         let currentYear = date.getFullYear();
         const fyear2 = (currentYear % 100) + 1;
-
+        
         if(trackerDetails){
         setFy1(trackerDetails.fy1);
         setFy2(trackerDetails.fy2);
@@ -265,11 +334,28 @@ function PharmacyForm() {
        
         
         if(currentMonth > 2){
+            console.log("CURRENT MONTH > 2", currentMonth)
             let updateTracker1 = {
-                _id : "6553250e6c6ac4939b14cdc0",
+                _id : "662019aa6a3743ba87536741",
                 fy1 : currentYear,
-                fy2 : fyear2
+                fy2 : fyear2,
             }
+
+            console.log("UPDATING", trackerDet);
+            if(trackerDet.data[0].updated_year < currentYear){
+            
+                console.log("Shud update sl to 1");
+                updateTracker1 = {
+                    _id : "662019aa6a3743ba87536741",
+                    fy1 : currentYear,
+                    fy2 : fyear2,
+                    sl_no: 1,
+                    updated_year: currentYear
+                }
+            }
+            
+
+
             setFy1(currentYear);
             setFy2(fyear2);
             dispatch(updateTracker(updateTracker1));
@@ -355,6 +441,25 @@ function PharmacyForm() {
         }
 
     }
+
+    const loadDoctorDesignations = () => {
+        if(allDoctors){
+        for(let i = 0;i< allDoctors.length ;i++){
+            if(allDoctors[i].name === suggestedBy){
+                console.log("sugg yes");
+                //localStorage.setItem("Doctor", JSON.stringify(allDoctors[i].designation));
+                setSuggestedByDesignation(allDoctors[i].designation);
+                //suggDesig = allDoctors[i].designation;
+            }
+            if(allDoctors[i].name === counterSignedBy){
+                console.log("yes");
+                //localStorage.setItem("DoctorCounter", JSON.stringify(allDoctors[i].designation));
+                setCounterSignedByDesignation(allDoctors[i].designation);
+                //countDesig = allDoctors[i].designation;
+            }
+        }
+    }
+    }
     const onClickSubmit = () => {
         const todayDate = new Date();
 
@@ -381,7 +486,7 @@ function PharmacyForm() {
 
         const slno = trackerDetails.sl_no + 1;
         const trackerUpdate = {
-            _id : "6553250e6c6ac4939b14cdc0",
+            _id : "662019aa6a3743ba87536741",
             sl_no : slno
         }
         const data = {
@@ -966,7 +1071,7 @@ function PharmacyForm() {
 
 
 
-        <div className='flex'>
+        {/* <div className='flex'>
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Suggested by
             </div>
@@ -996,12 +1101,12 @@ function PharmacyForm() {
 
             
 
-        </div>
+        </div> */}
 
 
 
 
-        <div className='flex'>
+        {/* <div className='flex'>
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Countersigned by Unit in-charge/Sores Incharge
             </div>
@@ -1022,7 +1127,75 @@ function PharmacyForm() {
                             </select>}
             </div>
 
-        </div>
+        </div> */}
+
+
+<div className='flex'>
+      <div className='flex w-[40%] px-5 py-2 border items-center'>
+      Suggested by
+      </div>
+      <div className='px-5 py-2 border w-[60%]'>
+        <input
+          className='h-10 w-96 border text-center'
+          type='text'
+          placeholder='Search for a Doctor'
+          value={suggestedBy   }
+          onChange={onChangeSuggestedBy}
+        />
+            { suggestedByDesignation &&   <label>({suggestedByDesignation  })</label>}
+        {suggestions2.length > 0 && (
+          <div className='suggestions-container cursor-pointer border w-[50%]'>
+            {suggestions2.map((doctor) => (
+              <div
+                key={doctor._id}
+                className='suggestion-item hover:bg-slate-200'
+                onClick={() => selectDoctor2(doctor)}
+              >
+                {doctor.name} ({doctor.designation})
+              </div>
+            ))}
+          </div>
+        )}
+             <button 
+                            className='bg-ui-light-blue text-white w-40 h-10 ml-5 rounded-md'
+                            onClick={handleOpenPopup}> Add Doctor</button>
+      {isPopupOpen && (
+        <DoctorEntry onClose={handleClosePopup} onSuccess = {refreshDoctorList}/>
+      )}
+      </div>
+      
+      
+    </div>
+
+
+<div className='flex'>
+      <div className='flex w-[40%] px-5 py-2 border items-center'>
+        Countersigned by Unit in-charge/Store Incharge
+      </div>
+      <div className='px-5 py-2 border w-[60%]'>
+        <input
+          className='h-10 w-96 border text-center'
+          type='text'
+          placeholder='Search for a Doctor'
+          value={counterSignedBy}
+          onChange={onChangeCounterSignedBy}
+        />
+        { counterSignedByDesignation &&   <label>({counterSignedByDesignation  })</label>}
+        {suggestions.length > 0 && (
+          <div className='suggestions-container cursor-pointer border w-[50%]'>
+            {suggestions.map((doctor) => (
+              <div
+                key={doctor._id}
+                className='suggestion-item'
+                onClick={() => selectDoctor(doctor)}
+              >
+                {doctor.name} ({doctor.designation})
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
 
 
 
