@@ -25,7 +25,7 @@ function Login() {
       password : password
     }
     dispatch(loginUser(data)).unwrap().then((result) => {
-      alert(result.message);
+      
       localStorage.setItem("userToken", JSON.stringify(result.data));
       navigate("/pharmacy-dashboard");
     }).catch((error) => {

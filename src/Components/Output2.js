@@ -49,7 +49,7 @@ function Output2() {
    { companyDetails && trackerDetails && <div className=''>
        
       <div ref={printRef} >
-       <div className=' w-[100%] text-[12px] text-center mt-10'>
+       <div className=' w-[100%] text-[16px] text-center mt-10'>
 
         SOUTH CENTRAL RAILWAY <br/>
         MEDICAL DEPARTMENT<br/>
@@ -62,30 +62,32 @@ function Output2() {
        </div>
 
 
-       <div className='ml-20 text-[10px]'>
+       <div className='ml-20 text-[14px]'>
        No: HQ/MD/69/Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDetails.sl_no}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;
+   
+      
+       
        
        Date:{formattedDate}<br/><br/>
 
        <p>PCMD/SCR</p><br/>
-       <p className='ml-10'>Sub: - Allotment of Product Code for {companyDetails.short_name} - Reg.</p>
+       <p className='ml-10 w-[80%]'>Sub: - Allotment of Product Code for {companyDetails.short_name} - Reg.</p>
        <br/>
-       <p className='ml-10'>With reference to the above, the following item is being proposed for allotment <br/>
-       of New Product Code/Change of Description of product as applicable and to include <br/>
+       <p className='ml-10 w-[80%]'>With reference to the above, the following item is being proposed for allotment 
+       of New Product Code/Change of Description of product as applicable and to include 
        in the Master list of {companyDetails.category} of South-Central Railway and approval is sought for the same. 
 </p> <br/>
-<p className='ml-10'>The following Firm is the manufacturer/Supplier for the subject item in India. </p>
+<p className='ml-10 w-[80%]'>The following Firm is the manufacturer/Supplier for the subject item in India. </p>
 <br/>
-<p className='font-bold'>Manufactured By:</p>
-<p>{companyDetails.pac_yes_no ==="Yes" ? companyDetails.manufactured_by : `${companyDetails.manufactured_by1}, ${companyDetails.manufactured_by2}`}</p>
+<p className='font-bold w-[80%]'>Manufactured By:</p>
+<p className='w-[80%]'>{companyDetails.pac_yes_no ==="Yes" ? companyDetails.manufactured_by : `${companyDetails.manufactured_by1}, ${companyDetails.manufactured_by2}`}</p>
 <br/>
-<p className=''>
+<p className='w-[80%]'>
     {companyDetails.pac_yes_no === "Yes" && (
         <>
             <strong>Imported By:  </strong><br />
@@ -99,7 +101,7 @@ function Output2() {
 <br/>
 <br/>
 
-<ul className='list-disc ml-10'>
+<ul className='list-disc ml-10 w-[80%]'>
     <li><strong>Description: </strong> {companyDetails.desc_and_spec} </li>
     <li><strong>Approximate Requirement: </strong> {companyDetails.avg_monthly_consumption} </li>
     <li><strong>Approximate Rate:  </strong> {companyDetails.rate_per_unit} : ( {companyDetails.price_ref} ) </li>
@@ -108,8 +110,8 @@ function Output2() {
 
 <br/> <br/>
 
-<p className='ml-10 '>
-PCMD/SCR is requested to assign New product code/Change of Description as <br/>applicable and include in the Master list of {companyDetails.category} 
+<p className='ml-10 w-[80%]'>
+PCMD/SCR is requested to assign New product code/Change of Description as applicable and include in the Master list of {companyDetails.category} 
 of South-Central Railway for use at CH/LGD.
 
 </p>
@@ -124,7 +126,7 @@ of South-Central Railway for use at CH/LGD.
        </div><br/><br/>
 
 
-       <div className=' text-[10px] ml-[75%] w-[20%]'>
+       <div className=' text-[16px] mt-20 ml-[75%] w-[20%]'>
         <p>MEDICAL DIRECTOR <br/></p>
         Central Hospital<br/>
         Lallaguda/SC	
@@ -136,7 +138,7 @@ of South-Central Railway for use at CH/LGD.
 
       {/* SECOND PAGE */}
       <div className='mt-[500px]'>
-      <div className=' w-[100%] text-[12px] text-center mt-10'>
+      <div className=' w-[100%] text-[16px] text-center mt-10'>
 
 SOUTH CENTRAL RAILWAY <br/>
 MEDICAL DEPARTMENT<br/>
@@ -149,7 +151,7 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
 
 
 
-<div className='ml-20 text-[10px]'>
+<div className='ml-20 text-[14px]'>
 No: HQ/MD/69/Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDetails.sl_no}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -157,33 +159,35 @@ No: HQ/MD/69/Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDe
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;
+      
+      
+      
      
        
        Date:{formattedDate}<br/><br/>
        <center><p className='ml-[-60px]'><strong>NOTE</strong></p></center>
        <br/>
        <br/>
-       <p className='ml-10'>Sub: - Allotment of Product Code for {companyDetails.short_name}-Reg.
+       <p className='ml-10 w-[80%]'>Sub: - Allotment of Product Code for {companyDetails.short_name}-Reg.
 </p>
 <center><p className='ml-[-60px]'>*****</p></center>
 <br/>
 <br/>
-<p className='ml-10'>It is requested to assign the New product code/Change of Description of product as <br/>
-applicable and include the below mentioned item in Master List of {companyDetails.category} <br/>
-of South Central Railway for use at CH/LGD. Necessary justification, <br/> 
+<p className='ml-10 w-[80%]'>It is requested to assign the New product code/Change of Description of product as
+applicable and include the below mentioned item in Master List of {companyDetails.category} 
+of South Central Railway for use at CH/LGD. Necessary justification, 
 issued by {companyDetails.suggested_by}, Note Approval, and other documents if any are enclosed herewith.</p>
 
     <br/>
     <br/>
-    <p><strong>Product Name : </strong> {companyDetails.desc_and_spec}</p>
+    <p className='w-[80%]'><strong>Product Name : </strong> {companyDetails.desc_and_spec}</p>
     <br/>
     <br/>
-    <div className='text-[12px] text-center ml-[70%] w-[20%]'>
+    <div className='text-[16px] mt-10 text-center ml-[50%] w-[50%]'>
     <p> Indenting Officer <br/>
-      {companyDetails.suggested_by.replace(/"/g, '')} 
+      {companyDetails.suggested_by } 
     <br/>
-  ( {localStorage.getItem("Doctor").replace(/"/g, '')} )
+  ( {companyDetails.suggested_by_designation } )
 
     </p>
     </div>
@@ -209,7 +213,7 @@ issued by {companyDetails.suggested_by}, Note Approval, and other documents if a
 {/* THIRD PAGE */}
 
 <div>
-<div className=' w-[100%]  text-sm text-center mt-[600px]'>
+<div className=' w-[100%]  text-[12px] text-center mt-[600px]'>
 
 
 Office of the Medical Director<br/>
@@ -218,7 +222,7 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
 <hr className='w-[80%] mx-auto border-[1px] border-black '></hr>
 
 </div>
-<div className='ml-20 text-sm'>
+<div className='ml-20 text-[12px]'>
     <p>Request No. {companyDetails.sl_no}/{companyDetails.fy1}-{companyDetails.fy2}
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -230,6 +234,10 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+     
 
 
        
@@ -238,7 +246,7 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
        <center><p className='ml-[-60px]'>NOTE</p></center>
        <p>Request for Inclusion/Change in product Code</p>
 
-       <table className='border-[1px] w-[90%] text-[10px]'>
+       <table className='border-[1px] w-[90%] text-[11px]'>
             <tbody>
             <tr className=" border-[1px] border-black">
                 <td className='border border-black w-[50%]'>New or Existing</td>
@@ -322,14 +330,14 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
             </tr>
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%]'>Suggested by</td>
-                <td className='flex justify-center pt-20'>{companyDetails.suggested_by} <br/>( {localStorage.getItem("Doctor").replace(/"/g, '')} )</td>
+                <td className=' justify-center pt-20'><div className='flex justify-center '>{companyDetails.suggested_by}</div><div className='flex justify-center '>( {companyDetails.suggested_by_designation } )</div></td>
             </tr>
 
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%] '>Countersigned by 
 Unit in-charge/Stores Incharge 
 </td>
-                <td className='flex justify-center pt-20'>{companyDetails.counter_signed_by}<br/> ( {localStorage.getItem("DoctorCounter").replace(/"/g, '')} )</td>
+                <td className=' justify-center pt-20'> <div className='flex justify-center '>{companyDetails.counter_signed_by}</div> <div className='flex justify-center '>( {companyDetails.counter_signed_by_designation } )</div></td>
             </tr>
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%]'>MD/CH/LGD</td>
@@ -359,7 +367,7 @@ Unit in-charge/Stores Incharge
 
     <div>
    
-<div className=' w-[100%] text-md text-center mt-96'>
+<div className=' w-[100%] text-[16px] text-center mt-96'>
 
 
 <strong>SOUTH CENTRAL RAILWAY <br/>
@@ -370,7 +378,7 @@ CENTRAL HOSPITAL, LALLAGUDA, SECUNDERABAD-17<br/></strong>
 
 </div>
 
-<div className='ml-20 text-sm'>
+<div className='ml-20 text-[15px]'>
 No: HQ/MD/69.Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDetails.sl_no}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -379,23 +387,29 @@ No: HQ/MD/69.Stores/PH Code/{companyDetails.fy1}-{companyDetails.fy2}/{companyDe
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;
+     
+      
+      
+     
+      
+       
        
        Date:{formattedDate}<br/><br/>
 
-       <p className='ml-10'>Sub: Justification for procurement of  {companyDetails.short_name}-Reg.
+       <p className='ml-10 w-[90%]'>Sub: Justification for procurement of  {companyDetails.short_name}-Reg.
 </p>
 
-<center><p className='ml-[-60px]'>*****</p></center>
+<center><p className='ml-[-60px] '>*****</p></center>
 
-<div className='w-[60%] ml-10 '>
+<div className='w-[80%] ml-10 text-[15px] '>
     {companyDetails.prod_complete_justif}
 </div>
 
-<div className='text-md text-center ml-[70%] w-[20%]'>
+<div className='text-[15px] mt-20 text-center ml-[50%] w-[50%] '>
     <p>  <br/>
     {companyDetails.suggested_by}  
     <br/>
-  ( {localStorage.getItem("Doctor").replace(/"/g, '')} )
+  ( {companyDetails.suggested_by_designation } )
 
     </p>
     </div>
