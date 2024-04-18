@@ -8,7 +8,7 @@ export const createAuthenticatedAxios = () => {
   // ...
 
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080/",
+    baseURL: "http://13.234.115.169:8080/",
     headers: {
       Authorization: token
     }
