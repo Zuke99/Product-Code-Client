@@ -301,7 +301,7 @@ Central Hospital, Lallaguda, Secunderabad-500 017.
                 <td className='border-[1px] border-black w-[50%]'>Whether  the item has to be procured under PAC
 (YES/NO)
 </td>
-                <td>{companyDetails.pac_yes_no}</td>
+                <td>{companyDetails.pac_yes_no === 'Yes' ? 'Yes. PAC "C" ' : "No"}</td>
             </tr>
             <tr className="border-[1px] border-black">
                 <td className='border-[1px] border-black w-[50%]'>If Yes, Details of OM/OEM available in the market</td>

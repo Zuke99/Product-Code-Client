@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/pharmacy/";
+const API_URL = "http://13.234.115.169:8080/pharmacy/";
 
 export const addPharmacyForm = createAsyncThunk('addPharmacyForm', async(data, {rejectWithValue}) => {
     try{
