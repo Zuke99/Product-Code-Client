@@ -193,7 +193,7 @@ issued by {companyDetails.suggested_by}, Note Approval, and other documents if a
     </div>
     <br/>
     <br/>
-    MD/CH/LGD.<br/><br/><br/><br/>
+    CSS-I/CH/LGD.<br/><br/><br/><br/>
     CHD/SCR.<br/><br/><br/><br/>
     PCMD/SCR.
 
@@ -340,7 +340,7 @@ Unit in-charge/Stores Incharge
                 <td className=' justify-center pt-20'> <div className='flex justify-center '>{companyDetails.counter_signed_by}</div> <div className='flex justify-center '>( {companyDetails.counter_signed_by_designation } )</div></td>
             </tr>
             <tr className="border-[1px] border-black">
-                <td className='border-[1px] border-black w-[50%]'>MD/CH/LGD</td>
+                <td className='border-[1px] border-black w-[50%]'>CSS-I/CH/LGD</td>
                 <td className='h-20'>Signature: </td>
             </tr>
             <tr className="border-[1px] border-black">
