@@ -286,7 +286,7 @@ function CompanyForm() {
 
             <div className='flex w-[100%] justify-center mt-5 bg-slate-200'>
 
-              <div className=' w-[80%] shadow-xl mb-16 bg-white'>
+              <div className=' w-[70%] shadow-xl mb-16 bg-white'>
                 <div className='flex bg-ui-black h-10 items-center justify-center'>
                 <center className='text-white text-lg font-bold'>Company Form</center>
                 </div>
@@ -296,7 +296,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
                   Short Name (Generic Name)
                   </div>
-                  <div className='px-5 py-2 border w-[60%]'>
+                  <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
                   <WordCountTextbox wordCount = {10} onTextChange={(text) => setShortName(text)}/>
                   </div>
 
@@ -306,10 +306,10 @@ function CompanyForm() {
 
 
               <div className='flex'>
-                  <div className='flex w-[40%] px-5 py-2 border items-center'>
+                  <div className='flex w-[40%] px-5 py-2 border items-center '>
                   Unit
                   </div>
-                  <div className='px-5 py-2 border w-[60%]'>
+                  <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
                   <WordCountTextbox wordCount = {10} onTextChange={(text) => setUnit(text)}/>
                   </div>
 
@@ -322,7 +322,7 @@ function CompanyForm() {
                   <div className='flex w-[40%] px-5 py-2 border items-center'>
                   Full Description and Specification
                   </div>
-                  <div className='px-5 py-2 border w-[60%]'>
+                  <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
                   <WordCountTextbox wordCount = {50} onTextChange={(text) => setDescAndSpec(text)}/>
                   </div>
 
@@ -335,7 +335,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Shelf Life (Months)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
                 <input className='border h-10 w-96 px-5 rounded-md' type='text' 
                 onChange={onChangeShelfLife} ></input>
             </div>
@@ -349,7 +349,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Product Brief Justification
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount = {60} onTextChange={(text) => setProdBriefJust(text)}/>
             </div>
 
@@ -362,7 +362,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Product Complete Justification
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount = {300} onTextChange={(text) => setProdCompleteJustif(text)}/>
             </div>
 
@@ -376,7 +376,7 @@ function CompanyForm() {
             Whether the item has to be procured under “PAC”(YES/NO)
                 </div>
 
-                <div className='px-5 py-2 border w-[60%]'>
+                <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
                 <select className='h-10 w-32 border text-center'
                 onChange={onPacChange}>
                             <option>Yes</option>
@@ -393,7 +393,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Manufactured By: (Company 1)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount={100} onTextChange={(text) => setManufacturedBy1(text)}/>
             </div>
 
@@ -406,7 +406,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Manufactured By: (Company 2)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount={100} onTextChange={(text) => setManufacturedBy2(text)}/>
             </div>
 
@@ -421,7 +421,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Manufactured By: (Name & Complete Address)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount={100} onTextChange={(text) => setManufacturedBy(text)} />
             </div>
 
@@ -434,7 +434,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Imported by: (Name & Complete Address)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount={100} onTextChange={(text) => setImportedBy(text)}/>
             </div>
 
@@ -447,7 +447,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Supplier/Distributor Details:(Name & Complete Address)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount={100} onTextChange={(text) => setSupplDistribDetails(text)}/>
             </div>
 
@@ -465,7 +465,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Rate per Unit (In Rupees)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount = {50} onTextChange={(text) => setRatePerUnit(text)}/>
             </div>
 
@@ -478,7 +478,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Price reference if any (Quotation / Purchase Order)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <WordCountTextbox wordCount = {50} onTextChange={(text) => setPriceRef(text)}/>
             </div>
 
@@ -500,7 +500,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Quotation/LPR
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setQuotationLpr(link)} />{quotationLpr}
             </div>
 
@@ -513,7 +513,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             PAC Certificate (If Any)
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setPacCertificate(link)}/>{pacCertificate}
             </div>
 
@@ -526,7 +526,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Manufacturer/ Importer/ Supplier Details
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setManufacturerFile(link)}/>{manufacturerFile}
             </div>
 
@@ -539,7 +539,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Product Pack Photo
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setProductPackPhoto(link)}/>{productPackPhoto}
             </div>
 
@@ -552,7 +552,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Additional Document 1
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setAdditionalDoc1(link)}/>{additionalDoc1}
             </div>
 
@@ -565,7 +565,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Additional Document 2
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setAdditionalDoc2(link)}/>{additionalDoc2}
             </div>
 
@@ -578,7 +578,7 @@ function CompanyForm() {
             <div className='flex w-[40%] px-5 py-2 border items-center'>
             Additional Document 3
             </div>
-            <div className='px-5 py-2 border w-[60%]'>
+            <div className='px-5 py-2 border w-[60%] drop-shadow-md'>
             <UploadWidget onTextChange={(link) => setAdditionalDoc3(link)}/>{additionalDoc3}
             </div>
 
