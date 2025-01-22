@@ -32,8 +32,8 @@ function Output1() {
       </div>
 
       <div>
-        MEDICAL DIRECTOR<br />
-        Central Hospital<br />
+        CSS - I | CH | LGD<br />
+        Form MD | CH | LGD<br />
         Lallaguda/SC.
       </div>
 {/* 
